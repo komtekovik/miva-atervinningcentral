@@ -14,6 +14,7 @@
 	let timeElapsed = $state(0);
 	let message = $state('');
 	let timerInterval: ReturnType<typeof setInterval>;
+
 	const startX = 500;
 	const startY = 550;
 
@@ -37,6 +38,7 @@
 		timeElapsed = 0;
 		message = 'Sortera skräpet!';
 		isWrongDrop = false;
+
 		highlightedContainerIndices = [];
 		hoveredContainerIndex = null;
 		activeTooltipIndex = null;
@@ -46,6 +48,7 @@
 			.slice(0, 15);
 
 		if (timerInterval) clearInterval(timerInterval);
+
 		timerInterval = setInterval(() => {
 			timeElapsed++;
 		}, 1000);
@@ -63,6 +66,7 @@
 		const rect = svgElement.getBoundingClientRect();
 		const scaleX = 2481 / rect.width;
 		const scaleY = 3508 / rect.height;
+
 		return {
 			x: (event.clientX - rect.left) * scaleX,
 			y: (event.clientY - rect.top) * scaleY
@@ -75,6 +79,7 @@
 
 		if (hoverTimeout) clearTimeout(hoverTimeout);
 		activeTooltipIndex = null;
+
 		const pos = getMousePosition(event);
 		offsetX = pos.x - dragX;
 		offsetY = pos.y - dragY;
@@ -89,6 +94,7 @@
 		const hintX = 2250;
 		const hintY = 2925;
 		const currentItem = trashItems[currentIndex];
+
 		const distToHint = Math.sqrt(Math.pow(dragX - hintX, 2) + Math.pow(dragY - hintY, 2));
 
 		if (distToHint < 150) {
@@ -110,10 +116,12 @@
 
 		let foundHover = null;
 		let minDistance = 150;
+
 		for (let i = 0; i < mapIcons.length; i++) {
 			const target = mapIcons[i];
 			const targetCenterX = target.x + target.w / 2;
 			const targetCenterY = target.y + target.h / 2;
+
 			const dx = dragX - targetCenterX;
 			const dy = dragY - targetCenterY;
 			const distance = Math.sqrt(dx * dx + dy * dy);
@@ -130,11 +138,13 @@
 		if (!isDragging || gameState !== 'playing') return;
 		isDragging = false;
 		const currentItem = trashItems[currentIndex];
+
 		highlightedContainerIndices = [];
 		hoveredContainerIndex = null;
 
 		const hintX = 2250;
 		const hintY = 2925;
+
 		const distToHint = Math.sqrt(Math.pow(dragX - hintX, 2) + Math.pow(dragY - hintY, 2));
 
 		if (distToHint < 150) {
@@ -144,11 +154,14 @@
 		}
 
 		let isCorrect = false;
+
 		for (let i = 0; i < mapIcons.length; i++) {
 			const target = mapIcons[i];
+
 			if (target.component === currentItem.target) {
 				const targetCenterX = target.x + target.w / 2;
 				const targetCenterY = target.y + target.h / 2;
+
 				const dx = dragX - targetCenterX;
 				const dy = dragY - targetCenterY;
 				const distance = Math.sqrt(dx * dx + dy * dy);
@@ -157,6 +170,7 @@
 					isCorrect = true;
 					if (iconElements[i]) {
 						iconElements[i].classList.add('correct-drop');
+
 						setTimeout(() => {
 							if (iconElements[i]) {
 								iconElements[i].classList.remove('correct-drop');
@@ -238,7 +252,8 @@
 				<rect width="800" height="450" rx="30" fill="white" stroke="#2c3e50" stroke-width="8" />
 				<text x="400" y="160" text-anchor="middle" font-size="70" font-weight="bold" fill="#2c3e50">Återvinningsspelet</text>
 				<text x="400" y="250" text-anchor="middle" font-size="40" fill="#34495e">Dra skräpet till rätt plats på kartan</text>
-				<g transform="translate(250, 320)" style="cursor: pointer;" onclick={startGame}>
+				<g transform="translate(250, 320)" style="cursor: pointer;"
+				onclick={startGame}>
 					<rect width="300" height="80" rx="40" fill="#27ae60" />
 					<text x="150" y="55" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Starta</text>
 				</g>
@@ -282,7 +297,8 @@
 				<rect width="800" height="400" rx="30" fill="white" stroke="#2c3e50" stroke-width="8" />
 				<text x="400" y="150" text-anchor="middle" font-size="80" font-weight="bold" fill="#2c3e50">Bra jobbat!</text>
 				<text x="400" y="230" text-anchor="middle" font-size="50" fill="#34495e">Din tid blev {timeElapsed} sekunder.</text>
-				<g transform="translate(250, 280)" style="cursor: pointer;" onclick={startGame}>
+				<g transform="translate(250, 280)" style="cursor: pointer;"
+				onclick={startGame}>
 					<rect width="300" height="80" rx="40" fill="#3498db" />
 					<text x="150" y="55" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Spela igen</text>
 				</g>
@@ -319,7 +335,7 @@
 <style>
 	:global(body) {
 		margin: 0;
-		padding: 20px;
+		padding: 0;
 		background-color: #f4f4f4;
 		display: flex;
 		justify-content: center;
@@ -329,14 +345,12 @@
 
 	.map-container {
 		display: grid;
-		width: 100%;
-		max-width: 1200px;
+		height: 100vh;
 		aspect-ratio: 2481 / 3508;
 		background: white;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		user-select: none;
 		touch-action: none;
-		scale: 0.8;
 	}
 
 	.map-container > :global(svg) {
