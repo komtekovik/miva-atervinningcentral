@@ -207,6 +207,7 @@
 		return {
 			title: icon.component.title || 'Okänd',
 			description: icon.component.description || '',
+			note: icon.component.note || '',
 			color: icon.component.color || '#1e3c72'
 		};
 	}
@@ -237,8 +238,7 @@
 				<rect width="800" height="450" rx="30" fill="white" stroke="#2c3e50" stroke-width="8" />
 				<text x="400" y="160" text-anchor="middle" font-size="70" font-weight="bold" fill="#2c3e50">Återvinningsspelet</text>
 				<text x="400" y="250" text-anchor="middle" font-size="40" fill="#34495e">Dra skräpet till rätt plats på kartan</text>
-				<g transform="translate(250, 320)" style="cursor: pointer;"
-				onclick={startGame}>
+				<g transform="translate(250, 320)" style="cursor: pointer;" onclick={startGame}>
 					<rect width="300" height="80" rx="40" fill="#27ae60" />
 					<text x="150" y="55" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Starta</text>
 				</g>
@@ -248,8 +248,7 @@
 		{#if gameState === 'playing'}
 			<g transform="translate(100, 100)">
 				<rect width="800" height="900" rx="20" fill="white" stroke="#2c3e50" stroke-width="6" />
-				<text x="400" y="120" text-anchor="middle" font-size="55" font-weight="bold" fill={isWrongDrop ?
-				'#e74c3c' : '#2c3e50'}>{message}</text>
+				<text x="400" y="120" text-anchor="middle" font-size="55" font-weight="bold" fill={isWrongDrop ? '#e74c3c' : '#2c3e50'}>{message}</text>
 				<text x="400" y="200" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {currentIndex + 1} av {trashItems.length}</text>
 				<text x="400" y="280" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {timeElapsed} s</text>
 			</g>
@@ -266,7 +265,8 @@
 			>
 				<g class="shake-inner {isWrongDrop ? 'shake' : ''}">
 					<path d="M 0 0 L 25 40 L 140 40 Q 160 40 160 60 L 160 240 Q 160 260 140 260 L -140 260 Q -160 260 -160 240 L -160 60 Q -160 40 -140 40 L -25 40 Z"
-					fill="white" stroke="#2c3e50" stroke-width="6" />
+					fill="white" 
+					stroke="#2c3e50" stroke-width="6" />
 					<text x="0" y="125" text-anchor="middle" dominant-baseline="middle" font-size="120" font-weight="bold" fill="#2c3e50">
 						{trashItems[currentIndex].icon}
 					</text>
@@ -282,8 +282,7 @@
 				<rect width="800" height="400" rx="30" fill="white" stroke="#2c3e50" stroke-width="8" />
 				<text x="400" y="150" text-anchor="middle" font-size="80" font-weight="bold" fill="#2c3e50">Bra jobbat!</text>
 				<text x="400" y="230" text-anchor="middle" font-size="50" fill="#34495e">Din tid blev {timeElapsed} sekunder.</text>
-				<g transform="translate(250, 280)" style="cursor: pointer;"
-				onclick={startGame}>
+				<g transform="translate(250, 280)" style="cursor: pointer;" onclick={startGame}>
 					<rect width="300" height="80" rx="40" fill="#3498db" />
 					<text x="150" y="55" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Spela igen</text>
 				</g>
@@ -305,7 +304,13 @@
 					</div>
 				</div>
 				<hr class="tooltip-divider" />
-				<p>{tooltipData.description}</p>
+				<p>
+					{tooltipData.description}
+					{#if tooltipData.note}
+						<br /><br />
+						{tooltipData.note}
+					{/if}
+				</p>
 			</div>
 		{/if}
 	</div>
