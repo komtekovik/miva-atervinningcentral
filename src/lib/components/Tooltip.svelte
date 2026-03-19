@@ -16,7 +16,10 @@
 	{#if game.activeTooltipIndex !== null && !game.isDragging}
 		{@const tooltipIcon = mapIcons[game.activeTooltipIndex]}
 		{@const tooltipData = getTooltipData(tooltipIcon)}
-		<div class="tooltip-card" style="left: {(tooltipIcon.x + tooltipIcon.w / 2) / 2481 * 100}%; top: {(tooltipIcon.y) / 3508 * 100}%;">
+		<div
+			class="tooltip-card {tooltipIcon.y > 1754 ? 'bottom' : 'top'}"
+			style="left: {(tooltipIcon.x + tooltipIcon.w / 2) / 2481 * 100}%; top: {tooltipIcon.y / 3508 * 100}%;"
+		>
 			<div class="tooltip-header">
 				<h2>{tooltipData.title}</h2>
 				<div class="tooltip-icon-wrapper" style="background: {tooltipData.color}">
@@ -50,7 +53,6 @@
 
 	.tooltip-card {
 		position: absolute;
-		transform: translate(-50%, -110%);
 		background: white;
 		border-radius: 12px;
 		padding: 20px;
@@ -61,6 +63,14 @@
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
+	}
+
+	.tooltip-card.top {
+		transform: translate(-50%, 10%);
+	}
+
+	.tooltip-card.bottom {
+		transform: translate(-50%, -110%);
 	}
 
 	.tooltip-header {
