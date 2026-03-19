@@ -34,7 +34,6 @@
 
 		if (hoverTimeout) clearTimeout(hoverTimeout);
 		game.activeTooltipIndex = null;
-
 		const pos = getMousePosition(event);
 		offsetX = pos.x - game.dragX;
 		offsetY = pos.y - game.dragY;
@@ -50,7 +49,6 @@
 		const hintY = 2925;
 		const currentItem = game.trashItems[game.currentIndex];
 		const distToHint = Math.sqrt(Math.pow(game.dragX - hintX, 2) + Math.pow(game.dragY - hintY, 2));
-
 		if (distToHint < 150) {
 			game.message = `Dra till behållaren med ${currentItem.category}`;
 			let newHighlights = [];
@@ -95,7 +93,6 @@
 		const hintX = 2250;
 		const hintY = 2925;
 		const distToHint = Math.sqrt(Math.pow(game.dragX - hintX, 2) + Math.pow(game.dragY - hintY, 2));
-
 		if (distToHint < 150) {
 			game.message = `Tips: Sorteras som ${currentItem.category}`;
 			resetPosition();
@@ -221,13 +218,14 @@
 
 	.map-container {
 		display: grid;
-		height: 125vh;
-		aspect-ratio: 2481 / 3508;
+		width: min(100vw, 120vh * (2481 / 3508));
+		height: min(120vh, 100vw * (3508 / 2481));
 		background: white;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		user-select: none;
 		touch-action: none;
 		position: relative;
+		overflow: hidden;
 	}
 
 	.map-container > :global(svg) {
