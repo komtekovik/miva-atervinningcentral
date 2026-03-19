@@ -1,7 +1,8 @@
 import { allTrashItems } from '$lib/trash-items';
 
 export const startX = 500;
-export const startY = 550;
+// Vi flyttar ner start-Y från 550 till 900 för att kompensera för inzoomningen (ca 350 enheter kapat i toppen)
+export const startY = 750; 
 
 export const game = $state({
 	status: 'start',

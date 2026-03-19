@@ -2,7 +2,7 @@
 	import { startGame } from '$lib/game.svelte';
 </script>
 
-<g transform="translate(100, 100)">
+<g transform="translate(100, 450)">
 	<rect width="800" height="450" rx="30" fill="white" stroke="#2c3e50" stroke-width="8" />
 	<text x="400" y="160" text-anchor="middle" font-size="70" font-weight="bold" fill="#2c3e50">Återvinningsspelet</text>
 	<text x="400" y="250" text-anchor="middle" font-size="40" fill="#34495e">Dra skräpet till rätt plats på kartan</text>
