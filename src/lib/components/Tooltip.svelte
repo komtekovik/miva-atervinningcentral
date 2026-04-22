@@ -16,6 +16,7 @@
 	{#if game.activeTooltipIndex !== null && !game.isDragging}
 		{@const tooltipIcon = mapIcons[game.activeTooltipIndex]}
 		{@const tooltipData = getTooltipData(tooltipIcon)}
+		{@const IconComponent = tooltipIcon.component.default}
 		<div
 			class="tooltip-card {tooltipIcon.y > 1754 ? 'bottom' : 'top'}"
 			style="left: {(tooltipIcon.x + tooltipIcon.w / 2) / 2481 * 100}%; top: {tooltipIcon.y / 3508 * 100}%;"
@@ -24,7 +25,7 @@
 				<h2>{tooltipData.title}</h2>
 				<div class="tooltip-icon-wrapper" style="background: {tooltipData.color}">
 					<svg viewBox="0 0 {tooltipIcon.w} {tooltipIcon.h}">
-						<svelte:component this={tooltipIcon.component.default} x="0" y="0" width={tooltipIcon.w} height={tooltipIcon.h} />
+						<IconComponent x="0" y="0" width={tooltipIcon.w} height={tooltipIcon.h} />
 					</svg>
 				</div>
 			</div>

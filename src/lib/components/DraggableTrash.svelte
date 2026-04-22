@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { game } from '$lib/game.svelte';
-	
-	let { handlePointerDown } = $props<{ handlePointerDown: (e: PointerEvent) => void }>();
+	import { draggable } from '$lib/actions/drag';
 </script>
 
 <g
+	use:draggable
 	class="draggable-trash {game.isDragging ? 'dragging' : ''} {game.isWrongDrop ? 'shake-container' : ''}"
 	transform="translate({game.dragX}, {game.dragY}) {game.isDragging ? 'scale(1.15)' : 'scale(1)'}"
-	onpointerdown={handlePointerDown}
 >
 	<g class="shake-inner {game.isWrongDrop ? 'shake' : ''}">
 		<path d="M 0 0 L 25 40 L 140 40 Q 160 40 160 60 L 160 240 Q 160 260 140 260 L -140 260 Q -160 260 -160 240 L -160 60 Q -160 40 -140 40 L -25 40 Z" fill="white" stroke="#2c3e50" stroke-width="6" />
@@ -24,6 +23,7 @@
 	.draggable-trash {
 		cursor: grab;
 		transition: transform 0.15s ease-out, filter 0.15s ease-out;
+		touch-action: none;
 	}
 
 	.draggable-trash.dragging {

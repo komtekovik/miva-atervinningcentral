@@ -3,7 +3,7 @@ export * as Energiatervinning from './energiatervinning.svelte';
 export * as Aterbruk from './aterbruk.svelte';
 export * as StoppadeMobler from './stoppade_mobler.svelte';
 export * as EjAtervinningsbart from './ej_atervinningsbart.svelte';
-export * as Storpantarmasking from './storpantarmaskin.svelte';
+export * as Storpantarmaskin from './storpantarmaskin.svelte';
 export * as RisGrenar from './ris_grenar.svelte';
 export * as Pallinsamling from './pallinsamling.svelte';
 export * as Elektronikavfall from './elektronikavfall.svelte';
