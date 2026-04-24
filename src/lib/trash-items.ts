@@ -1,12 +1,12 @@
 import type { TrashItem } from './types';
 
 export const allTrashItems: TrashItem[] = [
-    { name: 'Trämöbel', targetId: 'aterbruk', icon: '🪑', category: 'Återbruk' },
-    { name: 'Cykel', targetId: 'aterbruk', icon: '🚲', category: 'Återbruk' },
-    { name: 'Vas', targetId: 'aterbruk', icon: '🏺', category: 'Återbruk' },
-    { name: 'Bestick', targetId: 'aterbruk', icon: '🍴', category: 'Återbruk' },
-    { name: 'Kastrull', targetId: 'aterbruk', icon: '🍲', category: 'Återbruk' },
-    { name: 'Fåtölj', targetId: 'aterbruk', icon: '💺', category: 'Återbruk' },
+    { name: 'Hel Trämöbel', targetId: 'aterbruk', icon: '🪑', category: 'Återbruk' },
+    { name: 'Fin Cykel', targetId: 'aterbruk', icon: '🚲', category: 'Återbruk' },
+    { name: 'Fin Vas', targetId: 'aterbruk', icon: '🏺', category: 'Återbruk' },
+    { name: 'Fina Bestick', targetId: 'aterbruk', icon: '🍴', category: 'Återbruk' },
+    { name: 'Hel Kastrull', targetId: 'aterbruk', icon: '🍲', category: 'Återbruk' },
+    { name: 'Fin Fåtölj', targetId: 'aterbruk', icon: '💺', category: 'Återbruk' },
 
     { name: 'Skidor', targetId: 'sport_fritidsutrustning', icon: '🎿', category: 'Sport- och fritidsutrustning' },
     { name: 'Skridskor', targetId: 'sport_fritidsutrustning', icon: '⛸️', category: 'Sport- och fritidsutrustning' },
@@ -22,8 +22,8 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Hel tröja', targetId: 'textilinsamling', icon: '👕', category: 'Kläder och textil – helt och rent' },
     { name: 'Hela byxor', targetId: 'textilinsamling', icon: '👖', category: 'Kläder och textil – helt och rent' },
     { name: 'Hela skor', targetId: 'textilinsamling', icon: '👞', category: 'Kläder och textil – helt och rent' },
-    { name: 'Klänning', targetId: 'textilinsamling', icon: '👗', category: 'Kläder och textil – helt och rent' },
-    { name: 'Gardin', targetId: 'textilinsamling', icon: '🪟', category: 'Kläder och textil – helt och rent' },
+    { name: 'Fin Klänning', targetId: 'textilinsamling', icon: '👗', category: 'Kläder och textil – helt och rent' },
+    { name: 'Hel Gardin', targetId: 'textilinsamling', icon: '🪟', category: 'Kläder och textil – helt och rent' },
 
     { name: 'Trasig tröja', targetId: 'energiatervinning', icon: '👕', category: 'Energiåtervinning' },
     { name: 'Trasiga byxor', targetId: 'energiatervinning', icon: '👖', category: 'Energiåtervinning' },
@@ -59,8 +59,8 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Micro', targetId: 'elektronikavfall', icon: '⏲️', category: 'Elektronikavfall' },
     { name: 'Sladd', targetId: 'elektronikavfall', icon: '🔌', category: 'Elektronikavfall' },
 
-    { name: 'Trästol', targetId: 'tra', icon: '🪑', category: 'Trä' },
-    { name: 'Byrå', targetId: 'tra', icon: '🗄️', category: 'Trä' },
+    { name: 'Trasig Trästol', targetId: 'tra', icon: '🪑', category: 'Trä' },
+    { name: 'Trasig Byrå', targetId: 'tra', icon: '🗄️', category: 'Trä' },
     { name: 'Trädörr', targetId: 'tra', icon: '🚪', category: 'Trä' },
     { name: 'Stege', targetId: 'tra', icon: '🪜', category: 'Trä' },
 
@@ -86,7 +86,7 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Lerkruka', targetId: 'porslin_keramik', icon: '🏺', category: 'Porslin & Keramik' },
     { name: 'Kakel', targetId: 'porslin_keramik', icon: '⬜', category: 'Porslin & Keramik' },
 
-    { name: 'Soffa', targetId: 'stoppade_mobler', icon: '🛋️', category: 'Stoppade möbler' },
+    { name: 'Trasig Soffa', targetId: 'stoppade_mobler', icon: '🛋️', category: 'Stoppade möbler' },
     { name: 'Säng', targetId: 'stoppade_mobler', icon: '🛏️', category: 'Stoppade möbler' },
     { name: 'Trasig fåtölj', targetId: 'stoppade_mobler', icon: '💺', category: 'Stoppade möbler' },
     { name: 'Laminatgolv', targetId: 'stoppade_mobler', icon: '🟫', category: 'Stoppade möbler' },
@@ -106,7 +106,7 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Gråsten', targetId: 'sten_grus', icon: '🪨', category: 'Sten, Grus' },
     { name: 'Betongplint', targetId: 'sten_grus', icon: '🪨', category: 'Sten, Grus' },
 
-    { name: 'Pulka', targetId: 'hardplast', icon: '🛷', category: 'Hårdplast' },
+    { name: 'Plastpulka', targetId: 'hardplast', icon: '🛷', category: 'Hårdplast' },
     { name: 'Skurhink', targetId: 'hardplast', icon: '🪣', category: 'Hårdplast' },
     { name: 'Plastkruka', targetId: 'hardplast', icon: '🪴', category: 'Hårdplast' },
 
