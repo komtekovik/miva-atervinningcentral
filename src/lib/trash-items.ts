@@ -72,7 +72,6 @@ export const allTrashItems: TrashItem[] = [
 
     { name: 'Plastflaska', targetId: 'plastforpackningar', icon: '🥤', category: 'Plastförpackningar' },
     { name: 'Plastburk', targetId: 'plastforpackningar', icon: '🫙', category: 'Plastförpackningar' },
-    { name: 'Plasthink', targetId: 'plastforpackningar', icon: '🪣', category: 'Plastförpackningar' },
     { name: 'Schampoflaska', targetId: 'plastforpackningar', icon: '🧴', category: 'Plastförpackningar' },
     { name: 'Godispapper', targetId: 'plastforpackningar', icon: '🍬', category: 'Plastförpackningar' },
 
@@ -109,6 +108,7 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Plastpulka', targetId: 'hardplast', icon: '🛷', category: 'Hårdplast' },
     { name: 'Skurhink', targetId: 'hardplast', icon: '🪣', category: 'Hårdplast' },
     { name: 'Plastkruka', targetId: 'hardplast', icon: '🪴', category: 'Hårdplast' },
+	{ name: 'Plasthink', targetId: 'hardplast', icon: '🪣', category: 'Hårdplast' },
 
     { name: 'Fiskekrok', targetId: 'fiskeredskap', icon: '🪝', category: 'Fiskeredskap' },
     { name: 'Fiskenät', targetId: 'fiskeredskap', icon: '🕸️', category: 'Fiskeredskap' },
