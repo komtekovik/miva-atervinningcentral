@@ -19,7 +19,7 @@ export const mapIcons: MapIcon[] = [
 	{ id: 'metall', component: Icons.Metall, x: 843.58, y: 2143.00, w: 59, h: 59 },
 	{ id: 'metall', component: Icons.Metall, x: 487.35, y: 2264.03, w: 59, h: 59 },
 	{ id: 'hardplast', component: Icons.Hardplast, x: 635.50, y: 1279.46, w: 59, h: 59 },
-	{ id: 'sport_fritid', component: Icons.SportFritid, x: 1689.72, y: 1821.62, w: 59, h: 59 },
+	{ id: 'sport_fritidsutrustning', component: Icons.SportFritid, x: 1689.72, y: 1821.62, w: 59, h: 59 },
 	{ id: 'sten_grus', component: Icons.StenGrus, x: 1916.04, y: 738.66, w: 59, h: 59 },
 	{ id: 'gras_lov', component: Icons.GrasLov, x: 1916.04, y: 520.49, w: 59, h: 59 },
 	{ id: 'plastforpackningar', component: Icons.Plastforpackningar, x: 435.26, y: 1479.79, w: 59, h: 59 },
