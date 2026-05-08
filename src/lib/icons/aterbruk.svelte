@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Återbruk';
-  export const description = 'I vår mottagning för återbruk kan du lämna möbler, heminredning, husgeråd och cyklar så kan det komma till glädje för någon annan.';
-  export const note = 'Mottagningen och hantering av återbruk sköts av Startpunkten. De som deltar i Startpunktens verksamhet ser över och renoverar inlämnade möbler för att sedan sälja dem som "nya" i Startpunktens återvinningsbutik på Sjögatan 5 i Örnsköldsvik. Tänk på att inte lämna bokhyllor, vävstolar, tjock-TV eller trasiga saker som inte är möbler.'
-  export const color = 'rgb(131,194,81)';
-</script>
 <script>
   let props = $props();
 </script>

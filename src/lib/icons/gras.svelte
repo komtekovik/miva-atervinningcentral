@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Gräs & Löv';
-  export const description = 'Gräs, löv, kottar, barr, växter, fallfrukt och jord.';
-  export const note = 'Tänk på att tömda säckar inte ska kastas här utan i containern Energiåtervinning.';
-  export const color = 'rgb(2,107,50)';
-</script>
 <script>
   let props = $props();
 </script>

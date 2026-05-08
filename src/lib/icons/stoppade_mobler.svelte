@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Stoppade möbler';
-  export const description = 'Dörrar med isolering, laminatgolv, skidor, tavlor och dylikt. Presenningar och plastslangar lämnas också här. Allt brännbart material som är över 80 cm långt och som inte är av trä, metall eller plast hör hemma i denna kategori.';
-  export const color = 'rgb(14,12,20)';
-</script>
 <script>
   let props = $props();
 </script>

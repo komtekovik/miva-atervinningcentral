@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Metallförpackningar';
-  export const description = 'Metallock/kapsyler, aluminiumfolie och konservburkar.';
-  export const color = 'rgb(85,109,121)';
-</script>
 <script>
   let props = $props();
 </script>

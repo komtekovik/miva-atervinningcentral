@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Sten, Grus';
-  export const description = 'Betongplintar, marksten, trädgårdsplattor, tegelstenar och tegelpannor.';
-  export const note = 'För att lämna asbest, kontakta personalen.';
-  export const color = 'rgb(0,77,118)';
-</script>
 <script>
   let props = $props();
 </script>

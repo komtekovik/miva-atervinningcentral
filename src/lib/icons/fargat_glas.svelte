@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Färgat glas';
-  export const description = 'Flaskor och burkar av färgat glas.';
-  export const note = 'Tänk på att färgat och ofärgat glas sorteras var för sig.';
-  export const color = 'rgb(19,183,149)';
-</script>
 <script>
   let props = $props();
 </script>

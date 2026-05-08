@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Matfett';
-  export const description = 'Alla typer av matfett och matoljor som används vid eller uppkommer från matlagning av vegetabiliskt eller animaliskt ursprung. Även olja från inlagda livsmedel som till exempel tonfisk, oliver och soltorka­de tomater.';
-  export const note = 'Samla fettet i en PET-flaska och använd gärna en fettratt som du kostnadsfritt kan få av personalen på återvinningscentralen. Tänk på att du inte får flaskan i retur.';
-  export const color = 'rgb(11,178,89)';
-</script>
 <script>
   let props = $props();
 </script>

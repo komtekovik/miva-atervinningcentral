@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Porslin & Keramik';
-  export const description = 'WC-stolar, handfat, klinker, kakel, keramik och lerkrukor.';
-  export const color = 'rgb(0,71,120)';
-</script>
 <script>
   let props = $props();
 </script>

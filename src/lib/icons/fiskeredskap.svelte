@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Fiskeredskap';
-  export const description = 'Fiskespö, fiskedrag, nät och annan fiskeutrustning helt eller delvis gjorda av plast.';
-  export const color = 'rgb(145,52,147)';
-</script>
 <script>
   let props = $props();
 </script>

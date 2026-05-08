@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Kyl & Frys';
-  export const description = 'Kylskåp, frysskåp, frysboxar och varmvattenberedare.';
-  export const color = 'rgb(246,139,30)';
-</script>
 <script>
   let props = $props();
 </script>

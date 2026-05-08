@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Plastförpackningar';
-  export const description = 'Mjuka/hårda plastförpackningar, plastflaskor, plastburkar, plasthinkar, plastdunkar, plastpåsar/kassar och frigolit.';
-  export const color = 'rgb(145,52,147)';
-</script>
 <script>
   let props = $props();
 </script>

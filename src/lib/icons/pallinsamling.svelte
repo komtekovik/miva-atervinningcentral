@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Pallinsamling';
-  export const description = 'Återanvändning av helpallar med måtten 1200 x 800 och halvpallar med måtten 800 x 600, exempelvis byggpall, SJ-pall, EUR-pall och engångspall. Även pallkragar. Tänk på att trasiga lastpallar och pallkragar inte ska lämnas här utan kastas i containern Trä.';
-  export const color = 'rgb(0,71,120)';
-</script>
 <script>
   let props = $props();
 </script>

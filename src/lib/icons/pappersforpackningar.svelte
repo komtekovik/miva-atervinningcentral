@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Pappersförpackningar';
-  export const description = 'Wellpapp, papprör, kartonger, flyttlådor, matförpackningar, äggkartonger och papperspåsar/kassar.';
-  export const color = 'rgb(186,155,105)';
-</script>
 <script>
   let props = $props();
 </script>

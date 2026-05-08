@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Tryckimpregnerat trä';
-  export const description = 'Tryckimpregnerat trä och slipers. Kan innehålla arsenik, krom och andra farliga ämnen.';
-  export const color = 'rgb(237,26,56)';
-</script>
 <script>
   let props = $props();
 </script>

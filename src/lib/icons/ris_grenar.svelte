@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Ris & Grenar';
-  export const description = 'Kvistar, sly, häck-klipp, vedträ, stockar och huggkubbar.';
-  export const note = 'Tänk på att stubbar med rotverk och rötter sorteras för sig.';
-  export const color = 'rgb(2,107,50)';
-</script>
 <script>
   let props = $props();
 </script>

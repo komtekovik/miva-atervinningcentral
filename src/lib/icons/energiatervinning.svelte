@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Energiåtervinning';
-  export const description = 'Skumgummimadrasser, möbeldynor, mattor och större frigolit. Allt brännbart avfall som inte ryms i ditt sopkärl. Även lupiner och andra invasiva växter ska sorteras som Energiåtervinning.';
-  export const note = 'Tänk på att hårt material får vara max 80 cm långt. Längre material ska kastas i containern Stoppade möbler. Alla säckar med avfall måste vara genomskinliga. Tänk på att inga förpackningar lämnas här utan sorteras i separata behållare.';
-  export const color = 'rgb(14,12,20)';
-</script>
 <script>
   let props = $props();
 </script>

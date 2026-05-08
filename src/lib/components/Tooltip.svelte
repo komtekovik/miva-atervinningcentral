@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { mapIcons } from '$lib/map-icons';
 	import { game } from '$lib/game.svelte';
+	import { categories } from '$lib/data/categories';
 
 	function getTooltipData(icon: any) {
+		const category = categories.find(c => c.id === icon.id);
+		
 		return {
-			title: icon.component.title || 'Okänd',
-			description: icon.component.description || '',
-			note: icon.component.note || '',
-			color: icon.component.color || '#1e3c72'
+			title: category?.title || 'Okänd',
+			description: category?.description || '',
+			note: category?.note || '',
+			color: category?.color || '#1e3c72'
 		};
 	}
 </script>

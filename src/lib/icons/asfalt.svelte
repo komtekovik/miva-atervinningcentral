@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Asfalt';
-  export const description = 'Mindre mängder av asfalt.';
-  export const color = 'rgb(0,71,120)';
-</script>
 <script>
   let props = $props();
 </script>

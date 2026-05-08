@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Ofärgat glas';
-  export const description = 'Flaskor och burkar av ofärgat glas.';
-  export const color = 'rgb(19,183,149)';
-</script>
 <script>
   let props = $props();
 </script>

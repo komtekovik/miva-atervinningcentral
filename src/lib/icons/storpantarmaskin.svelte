@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Storpantarmaskin';
-  export const description = 'Panta dina burkar och PET-flaskor i vår storpantarmaskin. Du behöver inte röra burkarna och PET-flaskorna, utan häller dem direkt i maskinen. Du kan välja mellan att få en värdecheck som du kan handla för i de flesta matbutiker, få pengarna insatta på ditt bankkonto eller skänka pengarna till din favoritförening eller välgörenhet.';
-  export const color = '#1e3c72';
-</script>
 <script>
   let props = $props();
 </script>

@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Kläder och textil – helt och rent';
-  export const description = 'I PMU:s insamlingsbehållare lämnar du kläder, hemtextil och skor. Helt, rent och förpackat i förslutna påsar.';
-  export const note = 'Trasiga, smutsiga och mögliga textilier ska du slänga i hushållssoporna. Det gäller även strumpor och underkläder. På våra återvinningscentraler lämnar du dessa textilier i behållaren för energiåtervinning..';
-  export const color = 'rgb(131,194,81)';
-</script>
 <script>
   let props = $props();
 </script>

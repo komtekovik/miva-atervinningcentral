@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Elektronikavfall';
-  export const description = 'Dator, telefon, dammsugare, mikrovågsugn, elhandverktyg, armaturer, kabel och dylikt. Allt som har batteri eller sladd! Däremot lämnas TV, bildskärm, värmepump och kabel separat i byggnaden för farligt avfall. Där lämnas även batterier och ljuskällor.';
-  export const color = 'rgb(246,139,30)';
-</script>
 <script>
   let props = $props();
 </script>

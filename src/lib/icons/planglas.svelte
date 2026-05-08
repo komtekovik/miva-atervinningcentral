@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Planglas';
-  export const description = 'Balkongdörr med karm, fönster med karm, fönsterglas, spegelglas och glasskivor. Alla typer av plana glas. Kan vara färgade, armerade eller laminerade glasskivor.';
-  export const color = 'rgb(0,71,120)';
-</script>
 <script>
   let props = $props();
 </script>

@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Gips';
-  export const description = 'Gipsskivor, gipsbruk och gipspulver.';
-  export const color = 'rgb(0,71,120)';
-</script>
 <script>
   let props = $props();
 </script>

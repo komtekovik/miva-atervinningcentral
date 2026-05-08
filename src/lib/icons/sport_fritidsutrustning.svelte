@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Sport- och fritidsutrustning';
-  export const description = 'Här kan du skänka sport- och friluftsutrustning till Fritidsbanken. Det kan vara skidor, skridskor, inlines, flytvästar, tält, bollar av olika slag, klubbor, fiskespön, fotbollsskor, hjälmar, stormkök och mycket mer.';
-  export const note = 'Mottagningen och hanteringen av sport- och fritidsutrustning sköts av Fritidsbanken. På Fritidsbanken kan vem som helst kostnadsfritt låna sport- och friluftsutrustning i 14 dagar. Fritidsbanken finns på Sjögatan 5 i Örnsköldsvik.';
-  export const color = 'rgb(126,195,82)';
-</script>
 <script>
   let props = $props();
 </script>

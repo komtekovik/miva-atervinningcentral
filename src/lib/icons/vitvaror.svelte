@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Vitvaror';
-  export const description = 'Spisar, diskmaskiner, köksfläktar, tvättmaskiner, torktumlare och torkskåp.';
-  export const note = 'Tänk på att kyl och frys sorteras separat.';
-  export const color = 'rgb(246,139,30)';
-</script>
 <script>
     let props = $props();
 </script>

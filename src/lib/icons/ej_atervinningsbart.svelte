@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Ej återvinningsbart';
-  export const description = 'Mineralull, glasull, stenull och bruksglas/hushållsglas (t ex dricksglas, glasskålar och prydnadsförmål i glas).';
-  export const note = 'Tänk på att allt avfall som dammar (t ex isolering och sågspån) måste vara förpackat i genomskinliga säckar eller dylikt för att få lämnas.';
-  export const color = 'rgb(14,12,20)';
-</script>
 <script>
   let props = $props();
 </script>

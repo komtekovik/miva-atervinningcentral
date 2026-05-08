@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Hårdplast';
-  export const description = 'Skurhinkar, plastlådor, plastmöbler, plaströr, blomkrukor och plastleksaker.';
-  export const note = 'Tänk på att inga förpackningar lämnas här utan sorteras i separat behållare.'
-  export const color = 'rgb(145,52,147)';
-</script>
 <script>
   let props = $props();
 </script>

@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Trä';
-  export const description = 'Brädor, plank, spånskivor, plywood, masonit, trädörrar utan glas och trämöbler. Får innehålla spik och beslag samt färg, lack och lim.';
-  export const color = 'rgb(0,72,109)';
-</script>
 <script>
   let props = $props();
 </script>

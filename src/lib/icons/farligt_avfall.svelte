@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Farligt avfall';
-  export const description = 'Spillolja/diesel (max 25 liter), färgrester, kemikalier, lysrör, bilbatterier och dylikt.';
-  export const note = 'Större mängder spillolja/diesel lämnas mot kostnad. Hjälp med lossning av fat är möjlig mellan kl 7.00-15.30. Här lämnas även TV, bildskärm och kabel liksom batterier och ljuskällor. Farligt avfall är generellt kemiska produkter som är märkta med farosymboler. Men även elavfall, batterier, ljuskällor och impregnerat trä klassas som farligt avfall och måste tas om hand på rätt sätt. För att lämna asbest, kontakta personalen.';
-  export const color = 'rgb(237,27,46)';
-</script>
 <script>
   let props = $props();
 </script>

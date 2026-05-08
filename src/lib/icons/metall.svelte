@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Metall';
-  export const description = 'Värmeljuskoppar, järnskrot, gräsklippare, cyklar, sparkar, badkar, metallstolar, kastruller och övriga metallprodukter som inte är förpackningar.';
-  export const color = 'rgb(90,108,117)';
-</script>
 <script>
   let props = $props();
 </script>

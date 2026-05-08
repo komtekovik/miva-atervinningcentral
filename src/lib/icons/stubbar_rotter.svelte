@@ -1,9 +1,3 @@
-<script module>
-  export const title = 'Stubbar & Rötter';
-  export const description = 'Stubbar med rotverk som varit under mark och som kan innehålla stenar. ';
-  export const note = 'Tänk på att vedträ, stockar och huggkubbar ska lämnas som Ris & grenar.';
-  export const color = 'rgb(2,107,50)';
-</script>
 <script>
   let props = $props();
 </script>

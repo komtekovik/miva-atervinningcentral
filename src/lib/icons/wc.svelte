@@ -1,8 +1,3 @@
-<script module>
-  export const title = 'Kund-WC';
-  export const description = 'Här i mottagningen för farligt avfall hittar du också vår kundtoalett som är öppen när återvinningscentralen är bemannad.';
-  export const color = '#1e3c72';
-</script>
 <script>
     let props = $props();
 </script>
