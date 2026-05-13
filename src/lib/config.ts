@@ -13,7 +13,7 @@ export const config = {
 	},
 	startPos: {
 		x: 500,
-		y: 750
+		y: 450
 	},
 	timeouts: {
 		correctDrop: 500,
