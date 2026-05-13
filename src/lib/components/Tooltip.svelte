@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { mapIcons } from '$lib/map-icons';
 	import { game } from '$lib/game.svelte';
 	import { categories } from '$lib/data/categories';
 
@@ -17,9 +16,9 @@
 
 <div class="tooltip-layer">
 	{#if game.activeTooltipIndex !== null && !game.isDragging}
-		{@const tooltipIcon = mapIcons[game.activeTooltipIndex]}
+		{@const tooltipIcon = game.mapIcons[game.activeTooltipIndex]}
 		{@const tooltipData = getTooltipData(tooltipIcon)}
-		{@const IconComponent = tooltipIcon.component.default}
+		{@const IconComponent = tooltipIcon.component}
 		<div
 			class="tooltip-card {tooltipIcon.y > 1754 ? 'bottom' : 'top'}"
 			style="left: {(tooltipIcon.x + tooltipIcon.w / 2) / 2481 * 100}%; top: {tooltipIcon.y / 3508 * 100}%;"

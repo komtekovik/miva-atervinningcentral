@@ -1,5 +1,4 @@
 import { game, resetPosition, stopTimer } from '$lib/game.svelte';
-import { mapIcons } from '$lib/map-icons';
 
 export function draggable(node: SVGElement) {
 	let offsetX = 0;
@@ -43,7 +42,7 @@ export function draggable(node: SVGElement) {
 		
 		if (distToHint < 150) {
 			game.message = `Dra till behållaren med ${currentItem.category}`;
-			game.highlightedContainerIndices = mapIcons
+			game.highlightedContainerIndices = game.mapIcons
 				.map((icon, index) => icon.id === currentItem.targetId ? index : -1)
 				.filter(index => index !== -1);
 		} else {
@@ -55,8 +54,8 @@ export function draggable(node: SVGElement) {
 
 		let foundHover = null;
 		let minDistance = 150;
-		for (let i = 0; i < mapIcons.length; i++) {
-			const target = mapIcons[i];
+		for (let i = 0; i < game.mapIcons.length; i++) {
+			const target = game.mapIcons[i];
 			const targetCenterX = target.x + target.w / 2;
 			const targetCenterY = target.y + target.h / 2;
 			const dx = game.dragX - targetCenterX;
@@ -92,8 +91,8 @@ export function draggable(node: SVGElement) {
 		}
 
 		let isCorrect = false;
-		for (let i = 0; i < mapIcons.length; i++) {
-			const target = mapIcons[i];
+		for (let i = 0; i < game.mapIcons.length; i++) {
+			const target = game.mapIcons[i];
 			if (target.id === currentItem.targetId) {
 				const targetCenterX = target.x + target.w / 2;
 				const targetCenterY = target.y + target.h / 2;

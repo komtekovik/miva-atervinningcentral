@@ -1,7 +1,7 @@
 import * as Icons from '$lib/icons';
-import type { MapIcon } from './types';
+import type { MapItem } from '../../types';
 
-export const mapIcons: MapIcon[] = [
+export const mapIcons: MapItem[] = [
 	{ id: 'stubbar_rotter', component: Icons.StubbarRotter, x: 1916.04, y: 627.85, w: 59, h: 59 },
 	{ id: 'energiatervinning', component: Icons.Energiatervinning, x: 843.58, y: 1659.19, w: 59, h: 59 },
 	{ id: 'energiatervinning', component: Icons.Energiatervinning, x: 487.35, y: 1780.42, w: 59, h: 59 },

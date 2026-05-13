@@ -1,10 +1,17 @@
 import { allTrashItems } from './trash-items';
-import { mapIcons } from './map-icons';
+import { mapIcons as maIcons } from './svg/må/map-icons';
+import { mapIcons as bjastaIcons } from './svg/bjästa/map-icons';
 import { config } from './config';
 import { getDistance } from './utils';
 
+const mapRegistry = {
+	må: maIcons,
+	bjästa: bjastaIcons
+};
+
 export const game = $state({
 	status: 'start',
+	currentMapId: 'bjästa' as keyof typeof mapRegistry,
 	currentIndex: 0,
 	timeElapsed: 0,
 	message: '',
@@ -16,7 +23,10 @@ export const game = $state({
 	highlightedContainerIndices: [] as number[],
 	hoveredContainerIndex: null as number | null,
 	activeTooltipIndex: null as number | null,
-	correctContainerIndex: null as number | null
+	correctContainerIndex: null as number | null,
+	get mapIcons() {
+		return mapRegistry[this.currentMapId];
+	}
 });
 
 let timerInterval: ReturnType<typeof setInterval>;
@@ -31,7 +41,11 @@ export function startGame() {
 	game.hoveredContainerIndex = null;
 	game.activeTooltipIndex = null;
 	game.correctContainerIndex = null;
-	game.trashItems = [...allTrashItems].sort(() => 0.5 - Math.random()).slice(0, 15);
+
+	const validTargetIds = game.mapIcons.map(icon => icon.id);
+	const availableItems = allTrashItems.filter(item => validTargetIds.includes(item.targetId));
+
+	game.trashItems = [...availableItems].sort(() => 0.5 - Math.random()).slice(0, 15);
 
 	if (timerInterval) clearInterval(timerInterval);
 	timerInterval = setInterval(() => {
@@ -61,7 +75,7 @@ export function handlePointerMove(x: number, y: number) {
 
 	if (distToHint < config.hint.radius) {
 		game.message = `Dra till behållaren med ${currentItem.category}`;
-		game.highlightedContainerIndices = mapIcons
+		game.highlightedContainerIndices = game.mapIcons
 			.map((icon, index) => (icon.id === currentItem.targetId ? index : -1))
 			.filter((index) => index !== -1);
 	} else {
@@ -74,8 +88,8 @@ export function handlePointerMove(x: number, y: number) {
 	let foundHover: number | null = null;
 	let minDistance = config.drop.radius;
 
-	for (let i = 0; i < mapIcons.length; i++) {
-		const target = mapIcons[i];
+	for (let i = 0; i < game.mapIcons.length; i++) {
+		const target = game.mapIcons[i];
 		const targetCenter = { x: target.x + target.w / 2, y: target.y + target.h / 2 };
 		const distance = getDistance({ x, y }, targetCenter);
 
@@ -105,8 +119,8 @@ export function handlePointerUp() {
 
 	let isCorrect = false;
 
-	for (let i = 0; i < mapIcons.length; i++) {
-		const target = mapIcons[i];
+	for (let i = 0; i < game.mapIcons.length; i++) {
+		const target = game.mapIcons[i];
 		if (target.id === currentItem.targetId) {
 			const targetCenter = { x: target.x + target.w / 2, y: target.y + target.h / 2 };
 			const distance = getDistance({ x: game.dragX, y: game.dragY }, targetCenter);

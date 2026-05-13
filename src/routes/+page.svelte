@@ -1,8 +1,4 @@
 <script lang="ts">
-	import MapBase from '$lib/svg/map-base.svelte';
-	import MapContainers from '$lib/svg/map-containers.svelte';
-	import MapLabels from '$lib/svg/map-labels.svelte';
-	import { mapIcons } from '$lib/map-icons';
 	import { game, handlePointerMove, handlePointerUp } from '$lib/game.svelte';
 	import { config } from '$lib/config';
 	import StartScreen from '$lib/components/StartScreen.svelte';
@@ -11,10 +7,33 @@
 	import DraggableTrash from '$lib/components/DraggableTrash.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
+	import MapBaseMa from '$lib/svg/må/map-base.svelte';
+	import MapContainersMa from '$lib/svg/må/map-containers.svelte';
+	import MapLabelsMa from '$lib/svg/må/map-labels.svelte';
+
+	import MapBaseBjasta from '$lib/svg/bjästa/map-base.svelte';
+	import MapContainersBjasta from '$lib/svg/bjästa/map-containers.svelte';
+	import MapLabelsBjasta from '$lib/svg/bjästa/map-labels.svelte';
+
+	const mapComponents = {
+		må: {
+			base: MapBaseMa,
+			containers: MapContainersMa,
+			labels: MapLabelsMa
+		},
+		bjästa: {
+			base: MapBaseBjasta,
+			containers: MapContainersBjasta,
+			labels: MapLabelsBjasta
+		}
+	};
+
 	let svgElement: SVGSVGElement;
 	let offsetX = $state(0);
 	let offsetY = $state(0);
 	let hoverTimeout: ReturnType<typeof setTimeout>;
+
+	let currentMap = $derived(mapComponents[game.currentMapId]);
 
 	function getMousePosition(event: PointerEvent) {
 		if (!svgElement) return { x: 0, y: 0 };
@@ -32,7 +51,6 @@
 		game.isDragging = true;
 		if (hoverTimeout) clearTimeout(hoverTimeout);
 		game.activeTooltipIndex = null;
-		
 		const pos = getMousePosition(event);
 		offsetX = pos.x - game.dragX;
 		offsetY = pos.y - game.dragY;
@@ -67,12 +85,12 @@
 
 <div class="viewport">
 	<main class="map-container">
-		<MapBase />
-		<MapContainers />
-		<MapLabels />
+		<svelte:component this={currentMap.base} />
+		<svelte:component this={currentMap.containers} />
+		<svelte:component this={currentMap.labels} />
 
 		<svg bind:this={svgElement} viewBox="0 0 {config.map.width} {config.map.height}" class="icons-layer" onpointerdown={onPointerDown}>
-			{#each mapIcons as icon, i}
+			{#each game.mapIcons as icon, i}
 				{@const IconComponent = icon.component.default || icon.component}
 				<g
 					class="icon-wrap {game.highlightedContainerIndices.includes(i) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === i || game.activeTooltipIndex === i ? 'hovered-target' : ''} {game.correctContainerIndex === i ? 'correct-drop' : ''}"
