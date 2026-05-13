@@ -11,7 +11,7 @@ const mapRegistry = {
 
 export const game = $state({
 	status: 'start',
-	currentMapId: 'bjästa' as keyof typeof mapRegistry,
+	currentMapId: 'må' as keyof typeof mapRegistry,
 	currentIndex: 0,
 	timeElapsed: 0,
 	message: '',
@@ -30,6 +30,11 @@ export const game = $state({
 });
 
 let timerInterval: ReturnType<typeof setInterval>;
+
+export function selectStation(mapId: 'må' | 'bjästa') {
+	game.currentMapId = mapId;
+	startGame();
+}
 
 export function startGame() {
 	game.status = 'playing';
@@ -62,6 +67,11 @@ export function resetPosition() {
 
 export function stopTimer() {
 	clearInterval(timerInterval);
+}
+
+export function goToStart() {
+	game.status = 'start';
+	stopTimer();
 }
 
 export function handlePointerMove(x: number, y: number) {

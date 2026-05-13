@@ -1,13 +1,23 @@
 <script lang="ts">
-	import { startGame } from '$lib/game.svelte';
+	import { selectStation } from '$lib/game.svelte';
 </script>
 
-<g transform="translate(100, 450)">
-	<rect width="800" height="450" rx="30" fill="white" stroke="#2c3e50" stroke-width="8" />
-	<text x="400" y="160" text-anchor="middle" font-size="70" font-weight="bold" fill="#2c3e50">Återvinningsspelet</text>
-	<text x="400" y="250" text-anchor="middle" font-size="40" fill="#34495e">Dra skräpet till rätt plats på kartan</text>
-	<g transform="translate(250, 320)" style="cursor: pointer;" onclick={startGame}>
-		<rect width="300" height="80" rx="40" fill="#27ae60" />
-		<text x="150" y="55" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Starta</text>
+<g transform="translate(440, 1100)">
+	<rect width="1600" height="900" rx="50" fill="white" stroke="#2c3e50" stroke-width="12" />
+	
+	<text x="800" y="200" text-anchor="middle" font-size="100" font-weight="bold" fill="#2c3e50">
+		Välj återvinningsstation
+	</text>
+
+	<g transform="translate(150, 350)" style="cursor: pointer;" onclick={() => selectStation('må')}>
+		<rect width="600" height="400" rx="30" fill="#27ae60" />
+		<text x="300" y="220" text-anchor="middle" font-size="80" font-weight="bold" fill="white">Må</text>
+		<text x="300" y="300" text-anchor="middle" font-size="35" fill="white">Örnsköldsvik</text>
+	</g>
+
+	<g transform="translate(850, 350)" style="cursor: pointer;" onclick={() => selectStation('bjästa')}>
+		<rect width="600" height="400" rx="30" fill="#2980b9" />
+		<text x="300" y="220" text-anchor="middle" font-size="80" font-weight="bold" fill="white">Bjästa</text>
+		<text x="300" y="300" text-anchor="middle" font-size="35" fill="white">Hållänget</text>
 	</g>
 </g>

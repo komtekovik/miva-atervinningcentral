@@ -1,12 +1,17 @@
 <script lang="ts">
-	import { game } from '$lib/game.svelte';
+	import { game, goToStart } from '$lib/game.svelte';
 </script>
 
-<g transform="translate(100, 450)">
-	<rect width="800" height="600" rx="20" fill="white" stroke="#2c3e50" stroke-width="6" />
+<g transform="translate(260, 3000)" style="cursor: pointer;" onclick={goToStart}>
+	<rect width="300" height="120" rx="15" fill="#e74c3c" />
+	<text x="150" y="75" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Avbryt</text>
+</g>
+
+<g transform="translate(100, 100)">
+	<rect width="800" height="650" rx="20" fill="white" stroke="#2c3e50" stroke-width="6" />
 	<text x="400" y="100" text-anchor="middle" font-size="55" font-weight="bold" fill={game.isWrongDrop ? '#e74c3c' : '#2c3e50'}>{game.message}</text>
-	<text x="400" y="170" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {game.currentIndex + 1} av {game.trashItems.length}</text>
-	<text x="400" y="250" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {game.timeElapsed} s</text>
+	<text x="400" y="190" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {game.currentIndex + 1} av {game.trashItems.length}</text>
+	<text x="400" y="280" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {game.timeElapsed} s</text>
 </g>
 
 <g transform="translate(2250, 2925)">
