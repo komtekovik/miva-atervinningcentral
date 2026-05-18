@@ -17,15 +17,22 @@ export const game = $state({
 	message: '',
 	trashItems: [] as typeof allTrashItems,
 	isWrongDrop: false,
-	dragX: config.startPos.x,
-	dragY: config.startPos.y,
+	dragX: config.startPos.må.x,
+	dragY: config.startPos.må.y,
 	isDragging: false,
 	highlightedContainerIndices: [] as number[],
 	hoveredContainerIndex: null as number | null,
 	activeTooltipIndex: null as number | null,
 	correctContainerIndex: null as number | null,
+	isHoveringHint: false,
 	get mapIcons() {
 		return mapRegistry[this.currentMapId];
+	},
+	get hintPos() {
+		return {
+			x: config.startPos[this.currentMapId].x + config.hint.offsetX,
+			y: config.startPos[this.currentMapId].y + config.hint.offsetY
+		};
 	}
 });
 
@@ -46,6 +53,7 @@ export function startGame() {
 	game.hoveredContainerIndex = null;
 	game.activeTooltipIndex = null;
 	game.correctContainerIndex = null;
+	game.isHoveringHint = false;
 
 	const validTargetIds = game.mapIcons.map(icon => icon.id);
 	const availableItems = allTrashItems.filter(item => validTargetIds.includes(item.targetId));
@@ -61,8 +69,8 @@ export function startGame() {
 }
 
 export function resetPosition() {
-	game.dragX = config.startPos.x;
-	game.dragY = config.startPos.y;
+	game.dragX = config.startPos[game.currentMapId].x;
+	game.dragY = config.startPos[game.currentMapId].y;
 }
 
 export function stopTimer() {
@@ -81,18 +89,32 @@ export function handlePointerMove(x: number, y: number) {
 	game.dragY = y;
 
 	const currentItem = game.trashItems[game.currentIndex];
-	const distToHint = getDistance({ x, y }, config.hint);
+	
+	const trashCenterX = x;
+	const trashCenterY = y + 100;
 
-	if (distToHint < config.hint.radius) {
-		game.message = `Dra till behållaren med ${currentItem.category}`;
-		game.highlightedContainerIndices = game.mapIcons
-			.map((icon, index) => (icon.id === currentItem.targetId ? index : -1))
-			.filter((index) => index !== -1);
-	} else {
-		if (game.message.startsWith('Dra till')) {
-			game.message = 'Sortera skräpet!';
+	const mivoLeft = game.hintPos.x - config.hint.width / 2;
+	const mivoRight = game.hintPos.x + config.hint.width / 2;
+	const mivoTop = game.hintPos.y - config.hint.height / 2;
+	const mivoBottom = game.hintPos.y + config.hint.height / 2;
+
+	const inHintArea = trashCenterX >= mivoLeft && trashCenterX <= mivoRight &&
+					   trashCenterY >= mivoTop && trashCenterY <= mivoBottom;
+
+	if (inHintArea !== game.isHoveringHint) {
+		game.isHoveringHint = inHintArea;
+		
+		if (inHintArea) {
+			game.message = `Dra till behållaren med ${currentItem.category}`;
+			game.highlightedContainerIndices = game.mapIcons
+				.map((icon, index) => (icon.id === currentItem.targetId ? index : -1))
+				.filter((index) => index !== -1);
+		} else {
+			if (game.message.startsWith('Dra till')) {
+				game.message = 'Sortera skräpet!';
+			}
+			game.highlightedContainerIndices = [];
 		}
-		game.highlightedContainerIndices = [];
 	}
 
 	let foundHover: number | null = null;
@@ -108,7 +130,10 @@ export function handlePointerMove(x: number, y: number) {
 			foundHover = i;
 		}
 	}
-	game.hoveredContainerIndex = foundHover;
+	
+	if (game.hoveredContainerIndex !== foundHover) {
+		game.hoveredContainerIndex = foundHover;
+	}
 }
 
 export function handlePointerUp() {
@@ -116,12 +141,14 @@ export function handlePointerUp() {
 
 	game.isDragging = false;
 	const currentItem = game.trashItems[game.currentIndex];
+	
+	const wasHoveringHint = game.isHoveringHint;
+	
 	game.highlightedContainerIndices = [];
 	game.hoveredContainerIndex = null;
+	game.isHoveringHint = false;
 
-	const distToHint = getDistance({ x: game.dragX, y: game.dragY }, config.hint);
-
-	if (distToHint < config.hint.radius) {
+	if (wasHoveringHint) {
 		game.message = `Tips: Sorteras som ${currentItem.category}`;
 		resetPosition();
 		return;
