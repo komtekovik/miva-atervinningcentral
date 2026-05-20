@@ -24,6 +24,10 @@ export const config = {
 		bjästa: {
 			x: 400,
 			y: 2780
+		},
+		björna: {
+			x: 400,
+			y: 2810
 		}
 	},
 	timeouts: {

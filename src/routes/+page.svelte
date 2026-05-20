@@ -15,6 +15,10 @@
 	import MapContainersBjasta from '$lib/svg/bjästa/map-containers.svelte';
 	import MapLabelsBjasta from '$lib/svg/bjästa/map-labels.svelte';
 
+	import MapBaseBjorna from '$lib/svg/björna/map-base.svelte';
+	import MapContainersBjorna from '$lib/svg/björna/map-containers.svelte';
+	import MapLabelsBjorna from '$lib/svg/björna/map-labels.svelte';
+
 	const mapComponents = {
 		må: {
 			base: MapBaseMa,
@@ -25,6 +29,11 @@
 			base: MapBaseBjasta,
 			containers: MapContainersBjasta,
 			labels: MapLabelsBjasta
+		},
+		björna: {
+			base: MapBaseBjorna,
+			containers: MapContainersBjorna,
+			labels: MapLabelsBjorna
 		}
 	};
 
@@ -90,13 +99,31 @@
 		<svelte:component this={currentMap.labels} />
 
 		<svg bind:this={svgElement} viewBox="0 0 {config.map.width} {config.map.height}" class="icons-layer" onpointerdown={onPointerDown}>
-			{#each game.mapIcons as icon, i}
+			{#each game.mapIcons
+				.map((icon, originalIndex) => ({ icon, originalIndex }))
+				.sort((a, b) => {
+					const aIsActive = game.hoveredIconIndex === a.originalIndex || 
+									  game.hoveredContainerIndex === a.originalIndex || 
+									  game.highlightedContainerIndices.includes(a.originalIndex);
+					const bIsActive = game.hoveredIconIndex === b.originalIndex || 
+									  game.hoveredContainerIndex === b.originalIndex || 
+									  game.highlightedContainerIndices.includes(b.originalIndex);
+					
+					return Number(aIsActive) - Number(bIsActive);
+				}) as { icon, originalIndex } (originalIndex)}
+				
 				{@const IconComponent = icon.component.default || icon.component}
 				<g
-					class="icon-wrap {game.highlightedContainerIndices.includes(i) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === i || game.activeTooltipIndex === i ? 'hovered-target' : ''} {game.correctContainerIndex === i ? 'correct-drop' : ''}"
+					class="icon-wrap {game.highlightedContainerIndices.includes(originalIndex) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === originalIndex || game.activeTooltipIndex === originalIndex || game.hoveredIconIndex === originalIndex ? 'hovered-target' : ''} {game.correctContainerIndex === originalIndex ? 'correct-drop' : ''}"
 					style="transform-origin: {icon.x + icon.w / 2}px {icon.y + icon.h / 2}px;"
-					onpointerenter={() => handleTooltipEnter(i)}
-					onpointerleave={handleTooltipLeave}
+					onpointerenter={() => {
+						handleTooltipEnter(originalIndex);
+						game.hoveredIconIndex = originalIndex;
+					}}
+					onpointerleave={() => {
+						handleTooltipLeave();
+						game.hoveredIconIndex = null;
+					}}
 					role="group"
 				>
 					<IconComponent x={icon.x} y={icon.y} width={icon.w} height={icon.h} />

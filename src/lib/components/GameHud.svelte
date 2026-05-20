@@ -26,12 +26,12 @@ onclick={goToStart}>
 	<text x="150" y="75" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Avbryt</text>
 </g>
 
-<g transform="translate({config.startPos[game.currentMapId].x + config.cancel.offsetX + 450}, {config.startPos[game.currentMapId].y + config.cancel.offsetY + 70})">
+<g transform="translate({config.startPos[game.currentMapId].x + config.cancel.offsetX + 450}, {config.startPos[game.currentMapId].y + config.cancel.offsetY + 75})">
 	<!-- <rect width="800" height="650" rx="20" fill="white" stroke="#2c3e50" stroke-width="6" />
 	<text x="400" y="100" text-anchor="middle" font-size="55" font-weight="bold" fill={game.isWrongDrop ?
-'#e74c3c' : '#2c3e50'}>{game.message}</text>
-	<text x="400" y="190" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {game.currentIndex + 1} av {game.trashItems.length}</text> -->
-	<text x="0" y="0" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {game.timeElapsed} s</text>
+'#e74c3c' : '#2c3e50'}>{game.message}</text>  -->
+	<text x="0" y="25" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {game.currentIndex + 1} av {game.trashItems.length}</text>
+	<text x="0" y="-25" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {game.timeElapsed} s</text>
 </g>
 
 <g transform="translate({config.startPos[game.currentMapId].x + config.hint.offsetX}, {config.startPos[game.currentMapId].y + config.hint.offsetY})">

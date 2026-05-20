@@ -1,12 +1,14 @@
 import { allTrashItems } from './trash-items';
 import { mapIcons as maIcons } from './svg/må/map-icons';
 import { mapIcons as bjastaIcons } from './svg/bjästa/map-icons';
+import { mapIcons as bjornaIcons } from './svg/björna/map-icons';
 import { config } from './config';
 import { getDistance } from './utils';
 
 const mapRegistry = {
 	må: maIcons,
-	bjästa: bjastaIcons
+	bjästa: bjastaIcons,
+	björna: bjornaIcons
 };
 
 export const game = $state({
@@ -22,6 +24,7 @@ export const game = $state({
 	isDragging: false,
 	highlightedContainerIndices: [] as number[],
 	hoveredContainerIndex: null as number | null,
+	hoveredIconIndex: null as number | null,
 	activeTooltipIndex: null as number | null,
 	correctContainerIndex: null as number | null,
 	isHoveringHint: false,
@@ -38,7 +41,7 @@ export const game = $state({
 
 let timerInterval: ReturnType<typeof setInterval>;
 
-export function selectStation(mapId: 'må' | 'bjästa') {
+export function selectStation(mapId: 'må' | 'bjästa' | 'björna') {
 	game.currentMapId = mapId;
 	startGame();
 }
@@ -51,6 +54,7 @@ export function startGame() {
 	game.isWrongDrop = false;
 	game.highlightedContainerIndices = [];
 	game.hoveredContainerIndex = null;
+	game.hoveredIconIndex = null;
 	game.activeTooltipIndex = null;
 	game.correctContainerIndex = null;
 	game.isHoveringHint = false;
@@ -58,7 +62,12 @@ export function startGame() {
 	const validTargetIds = game.mapIcons.map(icon => icon.id);
 	const availableItems = allTrashItems.filter(item => validTargetIds.includes(item.targetId));
 
-	game.trashItems = [...availableItems].sort(() => 0.5 - Math.random()).slice(0, 15);
+	const shuffled = [...availableItems];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	game.trashItems = shuffled.slice(0, 15);
 
 	if (timerInterval) clearInterval(timerInterval);
 	timerInterval = setInterval(() => {

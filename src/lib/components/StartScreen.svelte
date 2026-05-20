@@ -9,13 +9,18 @@
 		Välj återvinningsstation
 	</text>
 
-	<g transform="translate(150, 350)" style="cursor: pointer;" onclick={() => selectStation('må')}>
-		<rect width="600" height="400" rx="30" fill="#27ae60" />
-		<text x="300" y="220" text-anchor="middle" font-size="80" font-weight="bold" fill="white">Må</text>
+	<g transform="translate(80, 350)" style="cursor: pointer;" onclick={() => selectStation('må')}>
+		<rect width="450" height="400" rx="30" fill="#27ae60" />
+		<text x="225" y="220" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Må</text>
 	</g>
 
-	<g transform="translate(850, 350)" style="cursor: pointer;" onclick={() => selectStation('bjästa')}>
-		<rect width="600" height="400" rx="30" fill="#2980b9" />
-		<text x="300" y="220" text-anchor="middle" font-size="80" font-weight="bold" fill="white">Bjästa</text>
+	<g transform="translate(575, 350)" style="cursor: pointer;" onclick={() => selectStation('bjästa')}>
+		<rect width="450" height="400" rx="30" fill="#2980b9" />
+		<text x="225" y="220" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Bjästa</text>
+	</g>
+
+	<g transform="translate(1070, 350)" style="cursor: pointer;" onclick={() => selectStation('björna')}>
+		<rect width="450" height="400" rx="30" fill="#8e44ad" />
+		<text x="225" y="220" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Björna</text>
 	</g>
 </g>
