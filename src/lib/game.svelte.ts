@@ -2,13 +2,17 @@ import { allTrashItems } from './trash-items';
 import { mapIcons as maIcons } from './svg/må/map-icons';
 import { mapIcons as bjastaIcons } from './svg/bjästa/map-icons';
 import { mapIcons as bjornaIcons } from './svg/björna/map-icons';
+import { mapIcons as husumIcons } from './svg/husum/map-icons';
+import { mapIcons as bredbynIcons } from './svg/bredbyn/map-icons';
 import { config } from './config';
 import { getDistance } from './utils';
 
 const mapRegistry = {
 	må: maIcons,
 	bjästa: bjastaIcons,
-	björna: bjornaIcons
+	björna: bjornaIcons,
+	husum: husumIcons,
+	bredbyn: bredbynIcons
 };
 
 export const game = $state({
@@ -31,9 +35,23 @@ export const game = $state({
 	get mapIcons() {
 		return mapRegistry[this.currentMapId];
 	},
+	get sortedMapIcons() {
+		return this.mapIcons
+			.map((icon: any, originalIndex: number) => ({ icon, originalIndex }))
+			.sort((a, b) => {
+				const aIsActive = this.hoveredIconIndex === a.originalIndex || 
+								  this.hoveredContainerIndex === a.originalIndex || 
+								  this.highlightedContainerIndices.includes(a.originalIndex);
+				const bIsActive = this.hoveredIconIndex === b.originalIndex || 
+								  this.hoveredContainerIndex === b.originalIndex || 
+								  this.highlightedContainerIndices.includes(b.originalIndex);
+				
+				return Number(aIsActive) - Number(bIsActive);
+			});
+	},
 	get hintPos() {
 		return {
-			x: config.startPos[this.currentMapId].x + config.hint.offsetX,
+			x: this.currentMapId === 'bredbyn' ? 350 : config.startPos[this.currentMapId].x + config.hint.offsetX,
 			y: config.startPos[this.currentMapId].y + config.hint.offsetY
 		};
 	}
@@ -41,7 +59,7 @@ export const game = $state({
 
 let timerInterval: ReturnType<typeof setInterval>;
 
-export function selectStation(mapId: 'må' | 'bjästa' | 'björna') {
+export function selectStation(mapId: keyof typeof mapRegistry) {
 	game.currentMapId = mapId;
 	startGame();
 }
@@ -59,7 +77,7 @@ export function startGame() {
 	game.correctContainerIndex = null;
 	game.isHoveringHint = false;
 
-	const validTargetIds = game.mapIcons.map(icon => icon.id);
+	const validTargetIds = game.mapIcons.map((icon: any) => icon.id);
 	const availableItems = allTrashItems.filter(item => validTargetIds.includes(item.targetId));
 
 	const shuffled = [...availableItems];
@@ -78,7 +96,7 @@ export function startGame() {
 }
 
 export function resetPosition() {
-	game.dragX = config.startPos[game.currentMapId].x;
+	game.dragX = game.currentMapId === 'bredbyn' ? 2100 : config.startPos[game.currentMapId].x;
 	game.dragY = config.startPos[game.currentMapId].y;
 }
 
@@ -116,8 +134,8 @@ export function handlePointerMove(x: number, y: number) {
 		if (inHintArea) {
 			game.message = `Dra till behållaren med ${currentItem.category}`;
 			game.highlightedContainerIndices = game.mapIcons
-				.map((icon, index) => (icon.id === currentItem.targetId ? index : -1))
-				.filter((index) => index !== -1);
+				.map((icon: any, index: number) => (icon.id === currentItem.targetId ? index : -1))
+				.filter((index: number) => index !== -1);
 		} else {
 			if (game.message.startsWith('Dra till')) {
 				game.message = 'Sortera skräpet!';

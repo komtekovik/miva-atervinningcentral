@@ -28,6 +28,14 @@ export const config = {
 		björna: {
 			x: 400,
 			y: 2810
+		},
+		husum: {
+			x: 400,
+			y: 2780
+		},
+		bredbyn: {
+			x: 400,
+			y: 2811
 		}
 	},
 	timeouts: {

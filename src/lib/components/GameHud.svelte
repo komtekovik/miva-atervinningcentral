@@ -6,7 +6,7 @@
 	import mivoTummenupp from '$lib/assets/mivo_tummenupp.png';
 </script>
 
-<g transform="translate({config.startPos[game.currentMapId].x}, {config.startPos[game.currentMapId].y})">
+<g transform="translate({game.currentMapId === 'bredbyn' ? 2100 : config.startPos[game.currentMapId].x}, {config.startPos[game.currentMapId].y}){game.currentMapId === 'bredbyn' ? ' scale(-1, 1)' : ''}">
 	<rect x="-80" y="-60" width="160" height="120" rx="8" fill="#95a5a6" stroke="#2c3e50" stroke-width="6" />
 	
 	<line x1="80" y1="0" x2="110" y2="0" stroke="#2c3e50" stroke-width="8" />
@@ -27,25 +27,24 @@ onclick={goToStart}>
 </g>
 
 <g transform="translate({config.startPos[game.currentMapId].x + config.cancel.offsetX + 450}, {config.startPos[game.currentMapId].y + config.cancel.offsetY + 75})">
-	<!-- <rect width="800" height="650" rx="20" fill="white" stroke="#2c3e50" stroke-width="6" />
-	<text x="400" y="100" text-anchor="middle" font-size="55" font-weight="bold" fill={game.isWrongDrop ?
-'#e74c3c' : '#2c3e50'}>{game.message}</text>  -->
 	<text x="0" y="25" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {game.currentIndex + 1} av {game.trashItems.length}</text>
 	<text x="0" y="-25" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {game.timeElapsed} s</text>
 </g>
 
-<g transform="translate({config.startPos[game.currentMapId].x + config.hint.offsetX}, {config.startPos[game.currentMapId].y + config.hint.offsetY})">
-
-	<image 
-		href={
-			game.message === 'Snyggt!' ? mivoTummenupp : 
-			(game.isHoveringHint || game.message.includes('Tips:') || game.message === 'Fel, försök igen!') ? mivoTalk : 
-			mivoIdle
-		}
-		x={-config.hint.width / 2}
-		y={-config.hint.height / 2}
-		width={config.hint.width}
-		height={config.hint.height}
-		pointer-events="none"
-	/>
+<g transform="translate({game.currentMapId === 'bredbyn' ? 350 : config.startPos[game.currentMapId].x + config.hint.offsetX}, {config.startPos[game.currentMapId].y + config.hint.offsetY})">
+	<g transform={game.currentMapId === 'bredbyn' ? 'scale(-1, 1)' : ''}>
+		<image 
+			href={
+				game.message === 'Snyggt!'
+				? mivoTummenupp : 
+				(game.isHoveringHint || game.message === 'Fel, försök igen!') ? mivoTalk : 
+				mivoIdle
+			}
+			x={-config.hint.width / 2}
+			y={-config.hint.height / 2}
+			width={config.hint.width}
+			height={config.hint.height}
+			pointer-events="none"
+		/>
+	</g>
 </g>

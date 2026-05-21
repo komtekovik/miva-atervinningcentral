@@ -19,6 +19,14 @@
 	import MapContainersBjorna from '$lib/svg/björna/map-containers.svelte';
 	import MapLabelsBjorna from '$lib/svg/björna/map-labels.svelte';
 
+	import MapBaseHusum from '$lib/svg/husum/map-base.svelte';
+	import MapContainersHusum from '$lib/svg/husum/map-containers.svelte';
+	import MapLabelsHusum from '$lib/svg/husum/map-labels.svelte';
+
+	import MapBaseBredbyn from '$lib/svg/bredbyn/map-base.svelte';
+	import MapContainersBredbyn from '$lib/svg/bredbyn/map-containers.svelte';
+	import MapLabelsBredbyn from '$lib/svg/bredbyn/map-labels.svelte';
+
 	const mapComponents = {
 		må: {
 			base: MapBaseMa,
@@ -34,6 +42,16 @@
 			base: MapBaseBjorna,
 			containers: MapContainersBjorna,
 			labels: MapLabelsBjorna
+		},
+		husum: {
+			base: MapBaseHusum,
+			containers: MapContainersHusum,
+			labels: MapLabelsHusum
+		},
+		bredbyn: {
+			base: MapBaseBredbyn,
+			containers: MapContainersBredbyn,
+			labels: MapLabelsBredbyn
 		}
 	};
 
@@ -99,19 +117,7 @@
 		<svelte:component this={currentMap.labels} />
 
 		<svg bind:this={svgElement} viewBox="0 0 {config.map.width} {config.map.height}" class="icons-layer" onpointerdown={onPointerDown}>
-			{#each game.mapIcons
-				.map((icon, originalIndex) => ({ icon, originalIndex }))
-				.sort((a, b) => {
-					const aIsActive = game.hoveredIconIndex === a.originalIndex || 
-									  game.hoveredContainerIndex === a.originalIndex || 
-									  game.highlightedContainerIndices.includes(a.originalIndex);
-					const bIsActive = game.hoveredIconIndex === b.originalIndex || 
-									  game.hoveredContainerIndex === b.originalIndex || 
-									  game.highlightedContainerIndices.includes(b.originalIndex);
-					
-					return Number(aIsActive) - Number(bIsActive);
-				}) as { icon, originalIndex } (originalIndex)}
-				
+			{#each game.sortedMapIcons as { icon, originalIndex } (originalIndex)}
 				{@const IconComponent = icon.component.default || icon.component}
 				<g
 					class="icon-wrap {game.highlightedContainerIndices.includes(originalIndex) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === originalIndex || game.activeTooltipIndex === originalIndex || game.hoveredIconIndex === originalIndex ? 'hovered-target' : ''} {game.correctContainerIndex === originalIndex ? 'correct-drop' : ''}"
