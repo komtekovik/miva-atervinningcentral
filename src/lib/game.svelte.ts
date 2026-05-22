@@ -15,6 +15,14 @@ const mapRegistry = {
 	bredbyn: bredbynIcons
 };
 
+const isClient = typeof window !== 'undefined';
+
+function getStoredBestTime(mapId: string): number | null {
+	if (!isClient) return null;
+	const val = localStorage.getItem(`best_time_${mapId}`);
+	return val ? parseInt(val, 10) : null;
+}
+
 export const game = $state({
 	status: 'start',
 	currentMapId: 'må' as keyof typeof mapRegistry,
@@ -32,6 +40,13 @@ export const game = $state({
 	activeTooltipIndex: null as number | null,
 	correctContainerIndex: null as number | null,
 	isHoveringHint: false,
+	bestTimes: {
+		må: getStoredBestTime('må'),
+		bjästa: getStoredBestTime('bjästa'),
+		björna: getStoredBestTime('björna'),
+		husum: getStoredBestTime('husum'),
+		bredbyn: getStoredBestTime('bredbyn')
+	},
 	get mapIcons() {
 		return mapRegistry[this.currentMapId];
 	},
@@ -51,8 +66,8 @@ export const game = $state({
 	},
 	get hintPos() {
 		return {
-			x: this.currentMapId === 'bredbyn' ? 350 : config.startPos[this.currentMapId].x + config.hint.offsetX,
-			y: config.startPos[this.currentMapId].y + config.hint.offsetY
+			x: config.hintPos[this.currentMapId].x,
+			y: config.hintPos[this.currentMapId].y
 		};
 	}
 });
@@ -96,7 +111,7 @@ export function startGame() {
 }
 
 export function resetPosition() {
-	game.dragX = game.currentMapId === 'bredbyn' ? 2100 : config.startPos[game.currentMapId].x;
+	game.dragX = config.startPos[game.currentMapId].x;
 	game.dragY = config.startPos[game.currentMapId].y;
 }
 
@@ -207,6 +222,14 @@ export function handlePointerUp() {
 		if (game.currentIndex >= game.trashItems.length) {
 			game.status = 'end';
 			stopTimer();
+
+			const currentBest = game.bestTimes[game.currentMapId];
+			if (currentBest === null || game.timeElapsed < currentBest) {
+				game.bestTimes[game.currentMapId] = game.timeElapsed;
+				if (typeof window !== 'undefined') {
+					localStorage.setItem(`best_time_${game.currentMapId}`, game.timeElapsed.toString());
+				}
+			}
 		} else {
 			resetPosition();
 		}

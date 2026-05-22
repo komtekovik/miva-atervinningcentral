@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { game, handlePointerMove, handlePointerUp } from '$lib/game.svelte';
 	import { config } from '$lib/config';
-	import StartScreen from '$lib/components/StartScreen.svelte';
-	import EndScreen from '$lib/components/EndScreen.svelte';
+	import GameMenu from '$lib/components/GameMenu.svelte';
 	import GameHud from '$lib/components/GameHud.svelte';
 	import DraggableTrash from '$lib/components/DraggableTrash.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
@@ -136,17 +135,13 @@
 				</g>
 			{/each}
 
-			{#if game.status === 'start'}
-				<StartScreen />
+			{#if game.status === 'start' || game.status === 'end'}
+				<GameMenu />
 			{/if}
 
 			{#if game.status === 'playing'}
 				<GameHud />
 				<DraggableTrash />
-			{/if}
-
-			{#if game.status === 'end'}
-				<EndScreen />
 			{/if}
 		</svg>
 

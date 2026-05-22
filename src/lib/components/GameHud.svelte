@@ -6,7 +6,7 @@
 	import mivoTummenupp from '$lib/assets/mivo_tummenupp.png';
 </script>
 
-<g transform="translate({game.currentMapId === 'bredbyn' ? 2100 : config.startPos[game.currentMapId].x}, {config.startPos[game.currentMapId].y}){game.currentMapId === 'bredbyn' ? ' scale(-1, 1)' : ''}">
+<g transform="translate({config.startPos[game.currentMapId].x}, {config.startPos[game.currentMapId].y}){game.currentMapId === 'bredbyn' ? ' scale(-1, 1)' : ''}">
 	<rect x="-80" y="-60" width="160" height="120" rx="8" fill="#95a5a6" stroke="#2c3e50" stroke-width="6" />
 	
 	<line x1="80" y1="0" x2="110" y2="0" stroke="#2c3e50" stroke-width="8" />
@@ -20,24 +20,24 @@
 	<rect x="235" y="15" width="10" height="20" rx="3" fill="#f1c40f" />
 </g>
 
-<g transform="translate({config.startPos[game.currentMapId].x + config.cancel.offsetX}, {config.startPos[game.currentMapId].y + config.cancel.offsetY})" style="cursor: pointer;"
-onclick={goToStart}>
+<g transform="translate({400 + config.cancel.offsetX}, {config.startPos[game.currentMapId].y + config.cancel.offsetY})" style="cursor: pointer;" onclick={goToStart}>
 	<rect width="300" height="120" rx="15" fill="#e74c3c" />
 	<text x="150" y="75" text-anchor="middle" font-size="45" font-weight="bold" fill="white">Avbryt</text>
 </g>
 
-<g transform="translate({config.startPos[game.currentMapId].x + config.cancel.offsetX + 450}, {config.startPos[game.currentMapId].y + config.cancel.offsetY + 75})">
+<g transform="translate({400 + config.cancel.offsetX + 450}, {config.startPos[game.currentMapId].y + config.cancel.offsetY + 75})">
 	<text x="0" y="25" text-anchor="middle" font-size="40" fill="#7f8c8d">Skräp {game.currentIndex + 1} av {game.trashItems.length}</text>
 	<text x="0" y="-25" text-anchor="middle" font-size="45" font-weight="bold" fill="#34495e">Tid: {game.timeElapsed} s</text>
 </g>
 
-<g transform="translate({game.currentMapId === 'bredbyn' ? 350 : config.startPos[game.currentMapId].x + config.hint.offsetX}, {config.startPos[game.currentMapId].y + config.hint.offsetY})">
+<g transform="translate({game.hintPos.x}, {game.hintPos.y})">
 	<g transform={game.currentMapId === 'bredbyn' ? 'scale(-1, 1)' : ''}>
 		<image 
 			href={
 				game.message === 'Snyggt!'
 				? mivoTummenupp : 
-				(game.isHoveringHint || game.message === 'Fel, försök igen!') ? mivoTalk : 
+				(game.isHoveringHint || game.message === 'Fel, försök igen!') ?
+				mivoTalk : 
 				mivoIdle
 			}
 			x={-config.hint.width / 2}
