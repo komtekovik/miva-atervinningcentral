@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { game, selectStation, startGame, goToStart } from '$lib/game.svelte';
+	import ChooseStationButton from './ChooseStationButton.svelte';
 </script>
 
 <g transform="translate(440, 1100)">
@@ -10,45 +11,11 @@
 			Välj återvinningsstation
 		</text>
 
-		<g transform="translate(80, 350)" style="cursor: pointer;" onclick={() => selectStation('må')}>
-			<rect width="450" height="400" rx="30" fill="#27ae60" />
-			<text x="225" y="190" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Må</text>
-			<text x="225" y="290" text-anchor="middle" font-size="38" fill="white">
-				{game.bestTimes.må !== null ? `Bästa: ${game.bestTimes.må}s` : 'Ingen tid än'}
-			</text>
-		</g>
-
-		<g transform="translate(575, 350)" style="cursor: pointer;" onclick={() => selectStation('bjästa')}>
-			<rect width="450" height="400" rx="30" fill="#2980b9" />
-			<text x="225" y="190" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Bjästa</text>
-			<text x="225" y="290" text-anchor="middle" font-size="38" fill="white">
-				{game.bestTimes.bjästa !== null ? `Bästa: ${game.bestTimes.bjästa}s` : 'Ingen tid än'}
-			</text>
-		</g>
-
-		<g transform="translate(1070, 350)" style="cursor: pointer;" onclick={() => selectStation('björna')}>
-			<rect width="450" height="400" rx="30" fill="#8e44ad" />
-			<text x="225" y="190" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Björna</text>
-			<text x="225" y="290" text-anchor="middle" font-size="38" fill="white">
-				{game.bestTimes.björna !== null ? `Bästa: ${game.bestTimes.björna}s` : 'Ingen tid än'}
-			</text>
-		</g>
-
-		<g transform="translate(327, 800)" style="cursor: pointer;" onclick={() => selectStation('husum')}>
-			<rect width="450" height="400" rx="30" fill="#e67e22" />
-			<text x="225" y="190" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Husum</text>
-			<text x="225" y="290" text-anchor="middle" font-size="38" fill="white">
-				{game.bestTimes.husum !== null ? `Bästa: ${game.bestTimes.husum}s` : 'Ingen tid än'}
-			</text>
-		</g>
-
-		<g transform="translate(822, 800)" style="cursor: pointer;" onclick={() => selectStation('bredbyn')}>
-			<rect width="450" height="400" rx="30" fill="#c0392b" />
-			<text x="225" y="190" text-anchor="middle" font-size="70" font-weight="bold" fill="white">Bredbyn</text>
-			<text x="225" y="290" text-anchor="middle" font-size="38" fill="white">
-				{game.bestTimes.bredbyn !== null ? `Bästa: ${game.bestTimes.bredbyn}s` : 'Ingen tid än'}
-			</text>
-		</g>
+		<ChooseStationButton x={80} y={350} fill="#27ae60" label="Må" bestTime={game.bestTimes.må} onclick={() => selectStation('må')} />
+		<ChooseStationButton x={575} y={350} fill="#2980b9" label="Bjästa" bestTime={game.bestTimes.bjästa} onclick={() => selectStation('bjästa')} />
+		<ChooseStationButton x={1070} y={350} fill="#8e44ad" label="Björna" bestTime={game.bestTimes.björna} onclick={() => selectStation('björna')} />
+		<ChooseStationButton x={327} y={800} fill="#e67e22" label="Husum" bestTime={game.bestTimes.husum} onclick={() => selectStation('husum')} />
+		<ChooseStationButton x={822} y={800} fill="#c0392b" label="Bredbyn" bestTime={game.bestTimes.bredbyn} onclick={() => selectStation('bredbyn')} />
 	{:else if game.status === 'end'}
 		<text x="800" y="250" text-anchor="middle" font-size="120" font-weight="bold" fill="#27ae60">Bra jobbat!</text>
 		
