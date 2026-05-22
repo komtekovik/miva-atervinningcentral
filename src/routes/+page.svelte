@@ -118,6 +118,21 @@
 		<svg bind:this={svgElement} viewBox="0 0 {config.map.width} {config.map.height}" class="icons-layer" onpointerdown={onPointerDown}>
 			{#each game.sortedMapIcons as { icon, originalIndex } (originalIndex)}
 				{@const IconComponent = icon.component.default || icon.component}
+				
+				{#if game.highlightedContainerIndices.includes(originalIndex) && game.isHintCooldown}
+					<circle 
+						cx={icon.x + icon.w / 2} 
+						cy={icon.y + icon.h / 2} 
+						r={config.drop.barrierRadius} 
+						fill="none" 
+						stroke="#e74c3c" 
+						stroke-width="6" 
+						stroke-dasharray="15,10" 
+						opacity="0.3" 
+						pointer-events="none"
+					/>
+				{/if}
+
 				<g
 					class="icon-wrap {game.highlightedContainerIndices.includes(originalIndex) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === originalIndex || game.activeTooltipIndex === originalIndex || game.hoveredIconIndex === originalIndex ? 'hovered-target' : ''} {game.correctContainerIndex === originalIndex ? 'correct-drop' : ''}"
 					style="transform-origin: {icon.x + icon.w / 2}px {icon.y + icon.h / 2}px;"

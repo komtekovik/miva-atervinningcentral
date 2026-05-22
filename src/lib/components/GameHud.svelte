@@ -36,7 +36,7 @@
 			href={
 				game.message === 'Snyggt!'
 				? mivoTummenupp : 
-				(game.isHoveringHint || game.message === 'Fel, försök igen!') ?
+				game.isHoveringHint ?
 				mivoTalk : 
 				mivoIdle
 			}

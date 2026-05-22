@@ -15,14 +15,6 @@ const mapRegistry = {
 	bredbyn: bredbynIcons
 };
 
-const isClient = typeof window !== 'undefined';
-
-function getStoredBestTime(mapId: string): number | null {
-	if (!isClient) return null;
-	const val = localStorage.getItem(`best_time_${mapId}`);
-	return val ? parseInt(val, 10) : null;
-}
-
 export const game = $state({
 	status: 'start',
 	currentMapId: 'må' as keyof typeof mapRegistry,
@@ -31,6 +23,7 @@ export const game = $state({
 	message: '',
 	trashItems: [] as typeof allTrashItems,
 	isWrongDrop: false,
+	isHintCooldown: false,
 	dragX: config.startPos.må.x,
 	dragY: config.startPos.må.y,
 	isDragging: false,
@@ -41,11 +34,11 @@ export const game = $state({
 	correctContainerIndex: null as number | null,
 	isHoveringHint: false,
 	bestTimes: {
-		må: getStoredBestTime('må'),
-		bjästa: getStoredBestTime('bjästa'),
-		björna: getStoredBestTime('björna'),
-		husum: getStoredBestTime('husum'),
-		bredbyn: getStoredBestTime('bredbyn')
+		må: null as number | null,
+		bjästa: null as number | null,
+		björna: null as number | null,
+		husum: null as number | null,
+		bredbyn: null as number | null
 	},
 	get mapIcons() {
 		return mapRegistry[this.currentMapId];
@@ -72,6 +65,14 @@ export const game = $state({
 	}
 });
 
+if (typeof window !== 'undefined') {
+	game.bestTimes.må = localStorage.getItem('best_time_må') ? parseInt(localStorage.getItem('best_time_må')!, 10) : null;
+	game.bestTimes.bjästa = localStorage.getItem('best_time_bjästa') ? parseInt(localStorage.getItem('best_time_bjästa')!, 10) : null;
+	game.bestTimes.björna = localStorage.getItem('best_time_björna') ? parseInt(localStorage.getItem('best_time_björna')!, 10) : null;
+	game.bestTimes.husum = localStorage.getItem('best_time_husum') ? parseInt(localStorage.getItem('best_time_husum')!, 10) : null;
+	game.bestTimes.bredbyn = localStorage.getItem('best_time_bredbyn') ? parseInt(localStorage.getItem('best_time_bredbyn')!, 10) : null;
+}
+
 let timerInterval: ReturnType<typeof setInterval>;
 
 export function selectStation(mapId: keyof typeof mapRegistry) {
@@ -85,6 +86,7 @@ export function startGame() {
 	game.timeElapsed = 0;
 	game.message = 'Sortera skräpet!';
 	game.isWrongDrop = false;
+	game.isHintCooldown = false;
 	game.highlightedContainerIndices = [];
 	game.hoveredContainerIndex = null;
 	game.hoveredIconIndex = null;
@@ -127,11 +129,58 @@ export function goToStart() {
 export function handlePointerMove(x: number, y: number) {
 	if (!game.isDragging || game.status !== 'playing') return;
 
-	game.dragX = x;
-	game.dragY = y;
-
+	let currentX = game.dragX;
+	let currentY = game.dragY;
 	const currentItem = game.trashItems[game.currentIndex];
-	
+
+	const totalDx = x - currentX;
+	const totalDy = y - currentY;
+	const totalDist = Math.sqrt(totalDx * totalDx + totalDy * totalDy);
+
+	if (totalDist > 0) {
+		const stepSize = 5;
+		const numSteps = Math.ceil(totalDist / stepSize);
+		const stepX = totalDx / numSteps;
+		const stepY = totalDy / numSteps;
+
+		for (let step = 0; step < numSteps; step++) {
+			currentX += stepX;
+			currentY += stepY;
+
+			if (game.isHintCooldown) {
+				let resolved = false;
+				let safetyCounter = 0;
+				while (!resolved && safetyCounter < 10) {
+					resolved = true;
+					for (let i = 0; i < game.mapIcons.length; i++) {
+						const targetIcon = game.mapIcons[i];
+						if (targetIcon.id === currentItem.targetId) {
+							const targetCenter = { x: targetIcon.x + targetIcon.w / 2, y: targetIcon.y + targetIcon.h / 2 };
+							const dx = currentX - targetCenter.x;
+							const dy = currentY - targetCenter.y;
+							const distance = Math.sqrt(dx * dx + dy * dy);
+
+							if (distance < config.drop.barrierRadius) {
+								resolved = false;
+								if (distance === 0) {
+									currentX = targetCenter.x + config.drop.barrierRadius;
+									currentY = targetCenter.y;
+								} else {
+									currentX = targetCenter.x + (dx / distance) * config.drop.barrierRadius;
+									currentY = targetCenter.y + (dy / distance) * config.drop.barrierRadius;
+								}
+							}
+						}
+					}
+					safetyCounter++;
+				}
+			}
+		}
+	}
+
+	game.dragX = currentX;
+	game.dragY = currentY;
+
 	const trashCenterX = x;
 	const trashCenterY = y + 100;
 
@@ -146,16 +195,20 @@ export function handlePointerMove(x: number, y: number) {
 	if (inHintArea !== game.isHoveringHint) {
 		game.isHoveringHint = inHintArea;
 		
-		if (inHintArea) {
-			game.message = `Dra till behållaren med ${currentItem.category}`;
+		if (inHintArea && !game.isHintCooldown) {
+			game.isHintCooldown = true;
+			game.message = `Tips: Sorteras som ${currentItem.category}`;
 			game.highlightedContainerIndices = game.mapIcons
 				.map((icon: any, index: number) => (icon.id === currentItem.targetId ? index : -1))
 				.filter((index: number) => index !== -1);
-		} else {
-			if (game.message.startsWith('Dra till')) {
-				game.message = 'Sortera skräpet!';
-			}
-			game.highlightedContainerIndices = [];
+			
+			setTimeout(() => {
+				game.isHintCooldown = false;
+				game.highlightedContainerIndices = [];
+				if (game.status === 'playing' && game.message.startsWith('Tips:')) {
+					game.message = 'Sortera skräpet!';
+				}
+			}, config.timeouts.hintCooldown);
 		}
 	}
 
@@ -165,7 +218,7 @@ export function handlePointerMove(x: number, y: number) {
 	for (let i = 0; i < game.mapIcons.length; i++) {
 		const target = game.mapIcons[i];
 		const targetCenter = { x: target.x + target.w / 2, y: target.y + target.h / 2 };
-		const distance = getDistance({ x, y }, targetCenter);
+		const distance = getDistance({ x: currentX, y: currentY }, targetCenter);
 
 		if (distance < minDistance) {
 			minDistance = distance;
@@ -183,15 +236,17 @@ export function handlePointerUp() {
 
 	game.isDragging = false;
 	const currentItem = game.trashItems[game.currentIndex];
-	
 	const wasHoveringHint = game.isHoveringHint;
 	
-	game.highlightedContainerIndices = [];
 	game.hoveredContainerIndex = null;
 	game.isHoveringHint = false;
 
 	if (wasHoveringHint) {
-		game.message = `Tips: Sorteras som ${currentItem.category}`;
+		resetPosition();
+		return;
+	}
+
+	if (game.isHintCooldown) {
 		resetPosition();
 		return;
 	}
@@ -207,6 +262,7 @@ export function handlePointerUp() {
 			if (distance < config.drop.radius) {
 				isCorrect = true;
 				game.correctContainerIndex = i;
+				game.highlightedContainerIndices = [];
 				setTimeout(() => {
 					game.correctContainerIndex = null;
 				}, config.timeouts.correctDrop);
@@ -236,6 +292,7 @@ export function handlePointerUp() {
 	} else {
 		game.message = 'Fel, försök igen!';
 		game.isWrongDrop = true;
+		game.highlightedContainerIndices = [];
 
 		setTimeout(() => {
 			game.isWrongDrop = false;

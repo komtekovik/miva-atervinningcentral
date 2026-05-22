@@ -12,7 +12,8 @@ export const config = {
 		offsetY: 100
 	},
 	drop: {
-		radius: 50
+		radius: 50,
+		barrierRadius: 200
 	},
 	startPos: {
 		må: {
@@ -61,6 +62,7 @@ export const config = {
 	timeouts: {
 		correctDrop: 500,
 		wrongDrop: 500,
-		tooltip: 200
+		tooltip: 200,
+		hintCooldown: 2000
 	}
 };
