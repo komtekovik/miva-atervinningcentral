@@ -113,6 +113,7 @@
 	}
 
 	function onPointerMove(event: PointerEvent) {
+		if (game.status !== 'playing') return;
 		const pos = getMousePosition(event);
 		if (game.isDragging) {
 			handlePointerMove(pos.x - offsetX, pos.y - offsetY);
@@ -131,6 +132,7 @@
 	}
 
 	function handleTooltipEnter(event: PointerEvent, index: number) {
+		if (game.status !== 'playing') return;
 		if (event.buttons > 0 || event.pointerType === 'touch') return;
 		if (!game.isDragging) {
 			game.hoveredIconIndex = index;
