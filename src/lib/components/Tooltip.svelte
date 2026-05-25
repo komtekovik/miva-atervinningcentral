@@ -16,30 +16,32 @@
 
 <div class="tooltip-layer">
 	{#if game.activeTooltipIndex !== null && !game.isDragging}
-		{@const tooltipIcon = game.mapIcons[game.activeTooltipIndex]}
-		{@const tooltipData = getTooltipData(tooltipIcon)}
-		{@const IconComponent = tooltipIcon.component}
-		<div
-			class="tooltip-card {tooltipIcon.y > 1754 ? 'bottom' : 'top'}"
-			style="left: {(tooltipIcon.x + tooltipIcon.w / 2) / 2481 * 100}%; top: {tooltipIcon.y / 3508 * 100}%;"
-		>
-			<div class="tooltip-header">
-				<h2>{tooltipData.title}</h2>
-				<div class="tooltip-icon-wrapper" style="background: {tooltipData.color}">
-					<svg viewBox="0 0 {tooltipIcon.w} {tooltipIcon.h}">
-						<IconComponent x="0" y="0" width={tooltipIcon.w} height={tooltipIcon.h} />
-					</svg>
+		{#key game.activeTooltipIndex}
+			{@const tooltipIcon = game.mapIcons[game.activeTooltipIndex]}
+			{@const tooltipData = getTooltipData(tooltipIcon)}
+			{@const IconComponent = tooltipIcon.component.default || tooltipIcon.component}
+			<div
+				class="tooltip-card {tooltipIcon.y > 1754 ? 'bottom' : 'top'}"
+				style="left: {(tooltipIcon.x + tooltipIcon.w / 2) / 2481 * 100}%; top: {tooltipIcon.y / 3508 * 100}%;"
+			>
+				<div class="tooltip-header">
+					<h2>{tooltipData.title}</h2>
+					<div class="tooltip-icon-wrapper" style="background: {tooltipData.color}">
+						<svg viewBox="0 0 {tooltipIcon.w} {tooltipIcon.h}">
+							<IconComponent x="0" y="0" width={tooltipIcon.w} height={tooltipIcon.h} />
+						</svg>
+					</div>
 				</div>
+				<hr class="tooltip-divider" />
+				<p>
+					{tooltipData.description}
+					{#if tooltipData.note}
+						<br /><br />
+						{tooltipData.note}
+					{/if}
+				</p>
 			</div>
-			<hr class="tooltip-divider" />
-			<p>
-				{tooltipData.description}
-				{#if tooltipData.note}
-					<br /><br />
-					{tooltipData.note}
-				{/if}
-			</p>
-		</div>
+		{/key}
 	{/if}
 </div>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { game, handlePointerMove, handlePointerUp } from '$lib/game.svelte';
 	import { config } from '$lib/config';
+	import { getDistance } from '$lib/utils';
 	import GameMenu from '$lib/components/GameMenu.svelte';
 	import GameHud from '$lib/components/GameHud.svelte';
 	import DraggableTrash from '$lib/components/DraggableTrash.svelte';
@@ -72,38 +73,88 @@
 		};
 	}
 
-	function onPointerDown(event: PointerEvent) {
-		if (game.status !== 'playing' || game.isWrongDrop) return;
-		game.isDragging = true;
-		if (hoverTimeout) clearTimeout(hoverTimeout);
-		game.activeTooltipIndex = null;
-		const pos = getMousePosition(event);
-		offsetX = pos.x - game.dragX;
-		offsetY = pos.y - game.dragY;
-	}
+	function updateSimulatedHover(pos: { x: number, y: number }) {
+		let closestIndex: number | null = null;
+		let minDistance = 80;
+		for (let i = 0; i < game.mapIcons.length; i++) {
+			const icon = game.mapIcons[i];
+			const iconCenter = { x: icon.x + icon.w / 2, y: icon.y + icon.h / 2 };
+			const dist = getDistance(pos, iconCenter);
+			if (dist < minDistance) {
+				minDistance = dist;
+				closestIndex = i;
+			}
+		}
 
-	function onPointerMove(event: PointerEvent) {
-		if (!game.isDragging) return;
-		const pos = getMousePosition(event);
-		handlePointerMove(pos.x - offsetX, pos.y - offsetY);
-	}
-
-	function onPointerUp() {
-		handlePointerUp();
-	}
-
-	function handleTooltipEnter(index: number) {
-		if (!game.isDragging) {
-			if (hoverTimeout) clearTimeout(hoverTimeout);
-			hoverTimeout = setTimeout(() => {
-				game.activeTooltipIndex = index;
-			}, config.timeouts.tooltip);
+		if (closestIndex !== null) {
+			game.hoveredIconIndex = closestIndex;
+			game.activeTooltipIndex = closestIndex;
+		} else {
+			game.hoveredIconIndex = null;
+			game.activeTooltipIndex = null;
 		}
 	}
 
-	function handleTooltipLeave() {
-		if (hoverTimeout) clearTimeout(hoverTimeout);
-		game.activeTooltipIndex = null;
+	function onPointerDown(event: PointerEvent) {
+		if (game.status !== 'playing' || game.isWrongDrop) return;
+		
+		const pos = getMousePosition(event);
+		const isOverTrash = pos.x >= game.dragX - 175 && pos.x <= game.dragX + 175 &&
+		                    pos.y >= game.dragY - 15 && pos.y <= game.dragY + 275;
+		if (isOverTrash) {
+			game.isDragging = true;
+			if (hoverTimeout) clearTimeout(hoverTimeout);
+			game.activeTooltipIndex = null;
+			offsetX = pos.x - game.dragX;
+			offsetY = pos.y - game.dragY;
+		} else {
+			updateSimulatedHover(pos);
+		}
+	}
+
+	function onPointerMove(event: PointerEvent) {
+		const pos = getMousePosition(event);
+		if (game.isDragging) {
+			handlePointerMove(pos.x - offsetX, pos.y - offsetY);
+		} else if (event.buttons > 0 || event.pointerType === 'touch') {
+			updateSimulatedHover(pos);
+		}
+	}
+
+	function onPointerUp() {
+		if (game.isDragging) {
+			handlePointerUp();
+		} else {
+			game.hoveredIconIndex = null;
+			game.activeTooltipIndex = null;
+		}
+	}
+
+	function handleTooltipEnter(event: PointerEvent, index: number) {
+		if (event.buttons > 0 || event.pointerType === 'touch') return;
+		if (!game.isDragging) {
+			game.hoveredIconIndex = index;
+			if (hoverTimeout) clearTimeout(hoverTimeout);
+			
+			if (game.activeTooltipIndex !== null && game.activeTooltipIndex !== index) {
+				game.activeTooltipIndex = index;
+			} else if (game.activeTooltipIndex === null) {
+				hoverTimeout = setTimeout(() => {
+					game.activeTooltipIndex = index;
+				}, config.timeouts.tooltip);
+			}
+		}
+	}
+
+	function handleTooltipLeave(event: PointerEvent, index: number) {
+		if (event.buttons > 0 || event.pointerType === 'touch') return;
+		if (game.hoveredIconIndex === index) {
+			game.hoveredIconIndex = null;
+		}
+		if (game.activeTooltipIndex === index) {
+			if (hoverTimeout) clearTimeout(hoverTimeout);
+			game.activeTooltipIndex = null;
+		}
 	}
 </script>
 
@@ -136,14 +187,8 @@
 				<g
 					class="icon-wrap {game.highlightedContainerIndices.includes(originalIndex) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === originalIndex || game.activeTooltipIndex === originalIndex || game.hoveredIconIndex === originalIndex ? 'hovered-target' : ''} {game.correctContainerIndex === originalIndex ? 'correct-drop' : ''}"
 					style="transform-origin: {icon.x + icon.w / 2}px {icon.y + icon.h / 2}px;"
-					onpointerenter={() => {
-						handleTooltipEnter(originalIndex);
-						game.hoveredIconIndex = originalIndex;
-					}}
-					onpointerleave={() => {
-						handleTooltipLeave();
-						game.hoveredIconIndex = null;
-					}}
+					onpointerenter={(e) => handleTooltipEnter(e, originalIndex)}
+					onpointerleave={(e) => handleTooltipLeave(e, originalIndex)}
 					role="group"
 				>
 					<IconComponent x={icon.x} y={icon.y} width={icon.w} height={icon.h} />

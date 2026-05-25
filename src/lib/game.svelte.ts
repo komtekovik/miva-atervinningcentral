@@ -47,12 +47,10 @@ export const game = $state({
 		return this.mapIcons
 			.map((icon: any, originalIndex: number) => ({ icon, originalIndex }))
 			.sort((a, b) => {
-				const aIsActive = this.hoveredIconIndex === a.originalIndex || 
-								  this.hoveredContainerIndex === a.originalIndex || 
-								  this.highlightedContainerIndices.includes(a.originalIndex);
-				const bIsActive = this.hoveredIconIndex === b.originalIndex || 
-								  this.hoveredContainerIndex === b.originalIndex || 
-								  this.highlightedContainerIndices.includes(b.originalIndex);
+				const aIsActive = this.highlightedContainerIndices.includes(a.originalIndex) || 
+								  this.correctContainerIndex === a.originalIndex;
+				const bIsActive = this.highlightedContainerIndices.includes(b.originalIndex) || 
+								  this.correctContainerIndex === b.originalIndex;
 				
 				return Number(aIsActive) - Number(bIsActive);
 			});

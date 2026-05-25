@@ -78,7 +78,7 @@ export const categories: CategoryData[] = [
 		color: 'rgb(145,52,147)'
 	},
 	{
-		id: 'gras',
+		id: 'gras_lov',
 		title: 'Gräs & Löv',
 		description: 'Gräs, löv, kottar, barr, växter, fallfrukt och jord.',
 		note: 'Tänk på att tömda säckar inte ska kastas här utan i containern Energiåtervinning.',
