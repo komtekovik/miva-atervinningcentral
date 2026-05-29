@@ -22,7 +22,7 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Hel byxa', targetId: 'textilinsamling', icon: '👖', category: 'Kläder och textil – helt och rent' },
     { name: 'Hel sko', targetId: 'textilinsamling', icon: '👞', category: 'Kläder och textil – helt och rent' },
     { name: 'Fin klänning', targetId: 'textilinsamling', icon: '👗', category: 'Kläder och textil – helt och rent' },
-    { name: 'Hel gardin', targetId: 'textilinsamling', icon: '🪟', category: 'Kläder och textil – helt och rent' },
+    { name: 'Hel gardin', targetId: 'textilinsamling', icon: '🏳', category: 'Kläder och textil – helt och rent' },
 
     { name: 'Trasig tröja', targetId: 'energiatervinning', icon: '👕', category: 'Energiåtervinning' },
     { name: 'Trasig byxa', targetId: 'energiatervinning', icon: '👖', category: 'Energiåtervinning' },
@@ -54,6 +54,7 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Målarfärg', targetId: 'farligt_avfall', icon: '🎨', category: 'Farligt avfall' },
     { name: 'Nagellack', targetId: 'farligt_avfall', icon: '💅', category: 'Farligt avfall' },
     { name: 'Spillolja', targetId: 'farligt_avfall', icon: '🛢️', category: 'Farligt avfall' },
+    { name: 'Sprayflaska', targetId: 'farligt_avfall', icon: '🚿', category: 'Farligt avfall' },
 
     { name: 'Laptop', targetId: 'elektronikavfall', icon: '💻', category: 'Elektronikavfall' },
     { name: 'Mobiltelefon', targetId: 'elektronikavfall', icon: '📱', category: 'Elektronikavfall' },
@@ -87,7 +88,6 @@ export const allTrashItems: TrashItem[] = [
     { name: 'Aluminiumfolie', targetId: 'metallforpackningar', icon: '🌯', category: 'Metallförpackningar' },
     { name: 'Kapsyl', targetId: 'metallforpackningar', icon: '🍾', category: 'Metallförpackningar' },
     { name: 'Tom färgburk i metall', targetId: 'metallforpackningar', icon: '🥫', category: 'Metallförpackningar' },
-    { name: 'Tom sprayflaska i metall', targetId: 'metallforpackningar', icon: '🧴', category: 'Metallförpackningar' },
 
     { name: 'Toalettstol', targetId: 'porslin_keramik', icon: '🚽', category: 'Porslin & Keramik' },
     { name: 'Trasig tallrik', targetId: 'porslin_keramik', icon: '🍽️', category: 'Porslin & Keramik' },
