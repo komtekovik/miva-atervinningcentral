@@ -3,46 +3,53 @@
 	import ChooseStationButton from './ChooseStationButton.svelte';
 </script>
 
-<g transform="translate(440, 1100)">
+<g transform="translate(440, 1100)" font-family="system-ui, sans-serif">
 	<rect width="1600" height="1350" rx="50" fill="white" stroke="#2c3e50" stroke-width="12" />
 
 	{#if game.status === 'start'}
-		<text x="800" y="150" text-anchor="middle" font-size="100" font-weight="bold" fill="#2c3e50">
+		<text x="800" y="130" text-anchor="middle" font-size="85" font-weight="bold" fill="#2c3e50">
 			Återvinningsstation
 		</text>
 
-		<!-- Spelregler -->
-		<g transform="translate(0, 240)">
-			<!-- Kort 1: Sortera -->
-			<rect x="100" y="0" width="400" height="220" rx="20" fill="#f8f9fa" stroke="#bdc3c7" stroke-width="4" />
-			<text x="300" y="65" text-anchor="middle" font-size="50">♻️</text>
-			<text x="300" y="115" text-anchor="middle" font-size="35" font-weight="bold" fill="#2c3e50">Sortera</text>
-			<text x="300" y="160" text-anchor="middle" font-size="26" fill="#34495e">Dra och släpp 15 föremål</text>
-			<text x="300" y="195" text-anchor="middle" font-size="26" fill="#34495e">i rätt container.</text>
+		<!-- Vänster kolumn: Information och regler -->
+		<g transform="translate(120, 200)">
+			<rect width="640" height="1000" rx="30" fill="#f8f9fa" stroke="#bdc3c7" stroke-width="4" />
+			<text x="320" y="90" text-anchor="middle" font-size="45" font-weight="bold" fill="#2c3e50">Så spelar du</text>
 
-			<!-- Kort 2: Tidtagning -->
-			<rect x="600" y="0" width="400" height="220" rx="20" fill="#f8f9fa" stroke="#bdc3c7" stroke-width="4" />
-			<text x="800" y="65" text-anchor="middle" font-size="50">⏱️</text>
-			<text x="800" y="115" text-anchor="middle" font-size="35" font-weight="bold" fill="#2c3e50">Tidtagning</text>
-			<text x="800" y="160" text-anchor="middle" font-size="26" fill="#34495e">Varje sekund räknas.</text>
-			<text x="800" y="195" text-anchor="middle" font-size="26" fill="#34495e">Din bästa tid sparas.</text>
+			<line x1="120" y1="140" x2="520" y2="140" stroke="#bdc3c7" stroke-width="2" />
 
-			<!-- Kort 3: Tips -->
-			<rect x="1100" y="0" width="400" height="220" rx="20" fill="#f8f9fa" stroke="#bdc3c7" stroke-width="4" />
-			<text x="1300" y="65" text-anchor="middle" font-size="50">💡</text>
-			<text x="1300" y="115" text-anchor="middle" font-size="35" font-weight="bold" fill="#2c3e50">Få tips</text>
-			<text x="1300" y="160" text-anchor="middle" font-size="26" fill="#34495e">Dra skräpet till Mivo</text>
-			<text x="1300" y="195" text-anchor="middle" font-size="26" fill="#34495e">för att se rätt kategori.</text>
+			<!-- Regel 1 -->
+			<text x="320" y="260" text-anchor="middle" font-size="70">♻️</text>
+			<text x="320" y="325" text-anchor="middle" font-size="32" font-weight="bold" fill="#2c3e50">Sortera</text>
+			<text x="320" y="375" text-anchor="middle" font-size="26" fill="#34495e">Dra 15 skräpföremål till</text>
+			<text x="320" y="415" text-anchor="middle" font-size="26" fill="#34495e">rätt container.</text>
+
+			<!-- Regel 2 -->
+			<text x="320" y="535" text-anchor="middle" font-size="70">⏱️</text>
+			<text x="320" y="600" text-anchor="middle" font-size="32" font-weight="bold" fill="#2c3e50">Tidtagning</text>
+			<text x="320" y="650" text-anchor="middle" font-size="26" fill="#34495e">Varje sekund räknas.</text>
+			<text x="320" y="690" text-anchor="middle" font-size="26" fill="#34495e">Din bästa tid sparas per ort.</text>
+
+			<!-- Regel 3 -->
+			<text x="320" y="810" text-anchor="middle" font-size="70">💡</text>
+			<text x="320" y="875" text-anchor="middle" font-size="32" font-weight="bold" fill="#2c3e50">Få tips</text>
+			<text x="320" y="925" text-anchor="middle" font-size="26" fill="#34495e">Dra skräpet till Mivo om</text>
+			<text x="320" y="965" text-anchor="middle" font-size="26" fill="#34495e">du är osäker på kategorin.</text>
 		</g>
 
-		<!-- Stationsval -->
-		<g transform="translate(0, 540) scale(0.85)">
-			<ChooseStationButton x={133} y={0} fill="#27ae60" label="Må" bestTime={game.bestTimes.må} onclick={() => selectStation('må')} />
-			<ChooseStationButton x={716} y={0} fill="#2980b9" label="Bjästa" bestTime={game.bestTimes.bjästa} onclick={() => selectStation('bjästa')} />
-			<ChooseStationButton x={1299} y={0} fill="#8e44ad" label="Björna" bestTime={game.bestTimes.björna} onclick={() => selectStation('björna')} />
+		<!-- Höger kolumn: Stationslista -->
+		<g transform="translate(840, 200)">
+			<text x="320" y="90" text-anchor="middle" font-size="40" font-weight="bold" fill="#7f8c8d">
+				Välj station för att starta
+			</text>
 
-			<ChooseStationButton x={327} y={450} fill="#e67e22" label="Husum" bestTime={game.bestTimes.husum} onclick={() => selectStation('husum')} />
-			<ChooseStationButton x={1104} y={450} fill="#c0392b" label="Bredbyn" bestTime={game.bestTimes.bredbyn} onclick={() => selectStation('bredbyn')} />
+			<g transform="translate(0, 150)">
+				<ChooseStationButton x={0} y={0} fill="#8e44ad" label="Björna" bestTime={game.bestTimes.björna} onclick={() => selectStation('björna')} />
+				<ChooseStationButton x={0} y={170} fill="#c0392b" label="Bredbyn" bestTime={game.bestTimes.bredbyn} onclick={() => selectStation('bredbyn')} />
+				<ChooseStationButton x={0} y={340} fill="#2980b9" label="Bjästa" bestTime={game.bestTimes.bjästa} onclick={() => selectStation('bjästa')} />
+				<ChooseStationButton x={0} y={510} fill="#e67e22" label="Husum" bestTime={game.bestTimes.husum} onclick={() => selectStation('husum')} />
+				<ChooseStationButton x={0} y={680} fill="#27ae60" label="Må" bestTime={game.bestTimes.må} isHard={true} onclick={() => selectStation('må')} />
+			</g>
 		</g>
 
 	{:else if game.status === 'end'}
