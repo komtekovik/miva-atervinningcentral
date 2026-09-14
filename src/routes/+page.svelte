@@ -39,7 +39,7 @@
     let svgElement: SVGSVGElement;
     let offsetX = $state(0);
     let offsetY = $state(0);
-    let hoverTimeout: ReturnType<typeof setTimeout>;
+    let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
     let currentMap = $derived(mapComponents[game.currentMapId]);
 
     onMount(() => {
@@ -78,11 +78,34 @@
         }
 
         if (closestIndex !== null) {
+            // Sätt hoveredIconIndex direkt men schemalägg visning av tooltip
+            // med samma logik som vid pointerenter för att undvika att en
+            // tidigare hover-timer visar en tooltip efter att pekaren lämnat.
             game.hoveredIconIndex = closestIndex;
-            game.activeTooltipIndex = closestIndex;
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
+
+            if (game.activeTooltipIndex !== null && game.activeTooltipIndex !== closestIndex) {
+                game.activeTooltipIndex = closestIndex;
+            } else if (game.activeTooltipIndex === null) {
+                hoverTimeout = setTimeout(() => {
+                    game.activeTooltipIndex = closestIndex;
+                    hoverTimeout = null;
+                }, config.timeouts.tooltip);
+            }
         } else {
-            game.hoveredIconIndex = null;
-            game.activeTooltipIndex = null;
+            if (game.hoveredIconIndex !== null) {
+                game.hoveredIconIndex = null;
+            }
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
+            if (game.activeTooltipIndex !== null) {
+                game.activeTooltipIndex = null;
+            }
         }
     }
 
@@ -144,8 +167,14 @@
         if (game.hoveredIconIndex === index) {
             game.hoveredIconIndex = null;
         }
+        // Se till att avbryta eventuella väntande hover-timers även om tooltipen
+        // ännu inte är synlig. Annars kan en tidigare timeout slå igång och visa
+        // en tooltip trots att pekaren lämnat ikonen.
+        if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+            hoverTimeout = null;
+        }
         if (game.activeTooltipIndex === index) {
-            if (hoverTimeout) clearTimeout(hoverTimeout);
             game.activeTooltipIndex = null;
         }
     }
@@ -178,7 +207,7 @@
                 {/if}
 
                 <g
-                    class="icon-wrap {game.highlightedContainerIndices.includes(originalIndex) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === originalIndex || game.activeTooltipIndex === originalIndex || game.hoveredIconIndex === originalIndex ? 'hovered-target' : ''} {game.correctContainerIndex === originalIndex ? 'correct-drop' : ''}"
+                    class="icon-wrap {game.highlightedContainerIndices.includes(originalIndex) ? 'highlighted-hint' : ''} {game.hoveredContainerIndex === originalIndex || game.hoveredIconIndex === originalIndex ? 'hovered-target' : ''} {game.correctContainerIndex === originalIndex ? 'correct-drop' : ''}"
                     style="transform-origin: {icon.x + icon.w / 2}px {icon.y + icon.h / 2}px;"
                     onpointerenter={(e) => handleTooltipEnter(e, originalIndex)}
                     onpointerleave={(e) => handleTooltipLeave(e, originalIndex)}

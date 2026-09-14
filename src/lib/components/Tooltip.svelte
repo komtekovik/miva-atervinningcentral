@@ -56,6 +56,13 @@
 		z-index: 10;
 	}
 
+	/* Gör tooltip-kortet icke-interaktivt så att det inte fångar muspekaren
+	   och blockerar pointer-events för ikoner under tooltipen. */
+	.tooltip-card,
+	.tooltip-card * {
+		pointer-events: none;
+	}
+
 	.tooltip-card {
 		position: absolute;
 		background: white;

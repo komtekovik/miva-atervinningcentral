@@ -47,11 +47,11 @@ export const game = $state({
 		return this.mapIcons
 			.map((icon: any, originalIndex: number) => ({ icon, originalIndex }))
 			.sort((a, b) => {
-				const aIsActive = this.highlightedContainerIndices.includes(a.originalIndex) || 
+				const aIsActive = this.highlightedContainerIndices.includes(a.originalIndex) ||
 								  this.correctContainerIndex === a.originalIndex;
-				const bIsActive = this.highlightedContainerIndices.includes(b.originalIndex) || 
+				const bIsActive = this.highlightedContainerIndices.includes(b.originalIndex) ||
 								  this.correctContainerIndex === b.originalIndex;
-				
+
 				return Number(aIsActive) - Number(bIsActive);
 			});
 	},
@@ -192,14 +192,14 @@ export function handlePointerMove(x: number, y: number) {
 
 	if (inHintArea !== game.isHoveringHint) {
 		game.isHoveringHint = inHintArea;
-		
+
 		if (inHintArea && !game.isHintCooldown) {
 			game.isHintCooldown = true;
 			game.message = `Tips: Sorteras som ${currentItem.category}`;
 			game.highlightedContainerIndices = game.mapIcons
 				.map((icon: any, index: number) => (icon.id === currentItem.targetId ? index : -1))
 				.filter((index: number) => index !== -1);
-			
+
 			setTimeout(() => {
 				game.isHintCooldown = false;
 				game.highlightedContainerIndices = [];
@@ -223,7 +223,7 @@ export function handlePointerMove(x: number, y: number) {
 			foundHover = i;
 		}
 	}
-	
+
 	if (game.hoveredContainerIndex !== foundHover) {
 		game.hoveredContainerIndex = foundHover;
 	}
@@ -235,7 +235,7 @@ export function handlePointerUp() {
 	game.isDragging = false;
 	const currentItem = game.trashItems[game.currentIndex];
 	const wasHoveringHint = game.isHoveringHint;
-	
+
 	game.hoveredContainerIndex = null;
 	game.isHoveringHint = false;
 
